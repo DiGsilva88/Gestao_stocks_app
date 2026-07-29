@@ -8,7 +8,6 @@
     <color name="text_primary">#F3F5F2</color>
     <color name="text_muted">#8D9791</color>
     <color name="contrast">#152018</color>
-
     <color name="critico">#F0937A</color>
     <color name="aviso">#F0A34A</color>
 </resources>

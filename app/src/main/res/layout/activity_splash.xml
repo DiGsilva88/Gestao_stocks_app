@@ -41,8 +41,15 @@
         android:textColor="@color/text_muted"
         android:textSize="15sp" />
 
-
-
+    <Button
+        android:id="@+id/btnEntrarSplash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:paddingHorizontal="28dp"
+        android:text="Entrar →"
+        android:backgroundTint="@color/accent"
+        android:textColor="@color/contrast" />
 
 
 

@@ -1,0 +1,4 @@
+- [x] Update `app/build.gradle.kts` with modern `buildFeatures` DSL
+- [x] Refactor `LoginActivity.kt` to use Fully Qualified Name or improve binding resolution
+- [x] Perform Gradle Sync and Build
+- [x] Verify build success

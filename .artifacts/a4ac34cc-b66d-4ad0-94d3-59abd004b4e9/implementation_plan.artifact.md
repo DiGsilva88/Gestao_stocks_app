@@ -1,27 +1,28 @@
-# Implementation Plan - Fix Duplicate Kotlin Extension Error
+# Implementation Plan - Resolve Persistent ActivityLoginBinding Error
 
-The project is using Android Gradle Plugin (AGP) 9.3.1. Starting from AGP 9.0, Kotlin support is built-in and enabled by default. Applying the `org.jetbrains.kotlin.android` plugin explicitly causes a conflict because AGP already registers the `kotlin` extension.
+The IDE is failing to resolve `ActivityLoginBinding` in `LoginActivity.kt`, incorrectly identifying the binding root as a `File` object. This is likely a caching or indexing conflict in the IDE's internal model for that specific name.
 
 ## Proposed Changes
 
-### Build Configuration
+### UI Components
 
-#### [MODIFY] [app/build.gradle.kts](file:///C:/Users/diana/AndroidStudioProjects/gesto_stocks/app/build.gradle.kts)
-- Remove `alias(libs.plugins.kotlin.android)` from the `plugins` block.
+#### [MODIFY] [activity_login.xml](file:///C:/Users/diana/AndroidStudioProjects/gesto_stocks/app/src/main/res/layout/activity_login.xml)
+- Add standard namespaces (`xmlns:app`, `xmlns:tools`).
+- Add `android:id="@+id/login_root"` to the root tag.
+- Add `tools:context=".LoginActivity"` to strengthen the link between layout and class.
 
-#### [MODIFY] [build.gradle.kts](file:///C:/Users/diana/AndroidStudioProjects/gesto_stocks/build.gradle.kts)
-- Remove `alias(libs.plugins.kotlin.android) apply false` from the `plugins` block.
+#### [MODIFY] [LoginActivity.kt](file:///C:/Users/diana/AndroidStudioProjects/gesto_stocks/app/src/main/java/com/example/gesto_stocks/LoginActivity.kt)
+- Refactor to use a `private lateinit var binding` member variable, matching the successful pattern in `MainActivity.kt`.
+- Use the FQN for inflation to ensure the compiler and IDE are looking at the correct generated class.
 
-#### [MODIFY] [gradle/libs.versions.toml](file:///C:/Users/diana/AndroidStudioProjects/gesto_stocks/gradle/libs.versions.toml)
-- Remove the `kotlin` version definition.
-- Remove the `kotlin-android` plugin definition.
+#### [RENAME] (Alternative)
+- If the above fails, rename `activity_login.xml` to `view_login.xml` to generate `ViewLoginBinding` and avoid any potential name collisions with the `ActivityLogin` string.
 
 ## Verification Plan
 
 ### Automated Tests
-- Run Gradle sync to verify the error is resolved.
-- Run a build to ensure Kotlin files are still being compiled correctly by the built-in support.
+- Run `gradle_build` to ensure the project still compiles (it should, as the compiler previously succeeded).
+- Run `analyze_file` on `LoginActivity.kt` to verify that the IDE resolution errors are resolved.
 
 ### Manual Verification
-- Verify that the `kotlin` extension is available if needed (though not explicitly used in the current build scripts).
-- Check for any other sync warnings related to AGP 9.x migration.
+- Check if red underlines persist in the IDE.

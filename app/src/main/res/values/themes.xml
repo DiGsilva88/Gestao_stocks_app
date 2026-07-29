@@ -12,5 +12,12 @@
     <item name="android:windowLightStatusBar">false</item>
     </style>
 
+    <style name="ChipFiltro" parent="Widget.Material3.Chip.Filter">
+        <item name="chipBackgroundColor">@color/card</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="chipStrokeColor">@color/text_muted</item>
+        <item name="chipStrokeWidth">1dp</item>
+    </style>
+
     <style name="Theme.Gestão_stocks" parent="Base.Theme.Gestão_stocks" />
 </resources>
