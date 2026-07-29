@@ -1,1 +1,25 @@
+
+# Gradle / Android
+.gradle/
+build/
+app/build/
 local.properties
+captures/
+.externalNativeBuild/
+.cxx/
+
+# IntelliJ / Android Studio
+.idea/
+*.iml
+
+
+.artifacts/
+
+
+# Chaves — nunca no GitHub
+*.jks
+*.keystore
+
+# OS
+.DS_Store
+Thumbs.db
