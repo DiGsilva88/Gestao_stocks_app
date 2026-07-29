@@ -2,4 +2,13 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="accent">#7DE0B0</color>
+    <color name="background">#1D1B20</color>
+    <color name="card">#20241F</color>
+    <color name="text_primary">#F3F5F2</color>
+    <color name="text_muted">#8D9791</color>
+    <color name="contrast">#152018</color>
+
+    <color name="critico">#F0937A</color>
+    <color name="aviso">#F0A34A</color>
 </resources>

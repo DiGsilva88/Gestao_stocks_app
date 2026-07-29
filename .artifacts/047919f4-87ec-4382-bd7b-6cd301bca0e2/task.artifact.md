@@ -1,0 +1,4 @@
+- [x] Update package and imports in `StockFragment.kt`
+- [x] Update package in `ProdutoAdapter.kt`
+- [x] Fix incorrect view ID in `StockFragment.kt`
+- [x] Verify build
