@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 
 class StockViewModel(app: Application) : AndroidViewModel(app) {
 
-    private val dao = StockifyDatabase.obterInstancia(app).produtoDao()
+    private val dao = StockifyDatabase.obter(app).produtoDao()
 
     private val todos: LiveData<List<Produto>> = dao.listarTodos()
 

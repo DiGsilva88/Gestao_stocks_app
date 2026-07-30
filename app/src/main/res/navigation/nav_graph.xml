@@ -15,7 +15,13 @@
         android:id="@+id/stockFragment"
         android:name="com.example.gesto_stocks.ui.stocks.StockFragment"
         android:label="Stock"
-        tools:layout="@layout/fragment_stock" />
+        tools:layout="@layout/fragment_stock">
+
+        <action
+            android:id="@+id/acaoStockParaForm"
+            app:destination="@id/produtoFormFragment" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/alertasFragment"
@@ -23,6 +29,17 @@
         android:label="Alertas"
         tools:layout="@layout/fragment_alertas" />
 
+    <fragment
+        android:id="@+id/produtoFormFragment"
+        android:name="com.example.gesto_stocks.ui.stocks.ProdutoFormFragment"
+        android:label="Produto"
+        tools:layout="@layout/fragment_produto_form">
 
+        <argument
+            android:name="produtoId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+
+    </fragment>
 
 </navigation>

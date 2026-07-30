@@ -23,6 +23,9 @@ interface ProdutoDao {
     @Insert
     suspend fun inserir(produto: Produto)
 
+    @Insert
+    suspend fun inserirTodos(produtos: List<Produto>)
+
     @Update
     suspend fun atualizar(produto: Produto)
 

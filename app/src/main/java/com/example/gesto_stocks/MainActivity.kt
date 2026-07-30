@@ -3,9 +3,9 @@ package com.example.gesto_stocks
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.example.gesto_stocks.databinding.ActivityMainBinding
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,6 +19,13 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
+
+        setSupportActionBar(binding.toolbar)
+
+        val config = AppBarConfiguration(
+            setOf(R.id.inicioFragment, R.id.stockFragment, R.id.alertasFragment)
+        )
+        binding.toolbar.setupWithNavController(navController, config)
 
         binding.bottomNavigation.setupWithNavController(navController)
     }

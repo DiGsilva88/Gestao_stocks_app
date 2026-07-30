@@ -7,8 +7,11 @@ import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.gesto_stocks.R
 import com.example.gesto_stocks.databinding.FragmentStockBinding
+import com.google.android.material.chip.Chip
 
 class StockFragment : Fragment() {
 
@@ -18,7 +21,8 @@ class StockFragment : Fragment() {
     private val viewModel: StockViewModel by viewModels()
 
     private val adapter = ProdutoAdapter { produto ->
-        // Fase 3: abrir o formulário de edição
+        val args = Bundle().apply { putInt("produtoId", produto.id) }
+        findNavController().navigate(R.id.acaoStockParaForm, args)
     }
 
     override fun onCreateView(
@@ -40,13 +44,26 @@ class StockFragment : Fragment() {
             adapter.submitList(lista)
         }
 
-        binding.editPesquisa.doAfterTextChanged {texto ->
+        binding.editPesquisa.doAfterTextChanged { texto ->
             viewModel.pesquisar(texto.toString())
+        }
+
+        binding.chipCategorias.setOnCheckedStateChangeListener { grupo, ids ->
+            val categoria = if (ids.isEmpty()) {
+                "Todos"
+            } else {
+                grupo.findViewById<Chip>(ids.first()).text.toString()
+            }
+            viewModel.filtrarCategoria(categoria)
+        }
+
+        binding.fabAdicionar.setOnClickListener {
+            findNavController().navigate(R.id.acaoStockParaForm)
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null   // obrigatório: evita fuga de memória
+        _binding = null
     }
 }
