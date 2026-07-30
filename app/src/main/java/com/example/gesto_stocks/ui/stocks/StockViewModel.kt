@@ -1,27 +1,26 @@
 package com.example.gesto_stocks.ui.stocks
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.viewModelScope
+import com.example.gesto_stocks.data.local.StockifyDatabase
 import com.example.gesto_stocks.data.model.Produto
+import kotlinx.coroutines.launch
 
-class StockViewModel: ViewModel()
-{
-//    dados ficticios
-    private val todos = listOf(
-    Produto(1, "Motor Elétrico X200",      "SKU-1042", "Motores",  quantidade = 84,  stockMinimo = 20),
-    Produto(2, "Sensor de Proximidade S3", "SKU-2087", "Sensores", quantidade = 12,  stockMinimo = 25),
-    Produto(3, "Cabo Blindado 4mm",        "SKU-3391", "Cabos",    quantidade = 0,   stockMinimo = 50),
-    Produto(4, "Filtro Industrial F9",     "SKU-4120", "Filtros",  quantidade = 156, stockMinimo = 40),
-    Produto(5, "Válvula Pneumática V7",    "SKU-5205", "Válvulas", quantidade = 8,   stockMinimo = 15)
+class StockViewModel(app: Application) : AndroidViewModel(app) {
 
-    )
+    private val dao = StockifyDatabase.obterInstancia(app).produtoDao()
 
-    private val _produtos = MutableLiveData(todos)
-    val produtos: LiveData<List<Produto>> = _produtos
+    private val todos: LiveData<List<Produto>> = dao.listarTodos()
 
     private var textoAtual = ""
     private var categoriaAtual = "Todos"
+
+    val produtos = MediatorLiveData<List<Produto>>().apply {
+        addSource(todos) { aplicarFiltros() }
+    }
 
     fun pesquisar(texto: String) {
         textoAtual = texto
@@ -34,7 +33,9 @@ class StockViewModel: ViewModel()
     }
 
     private fun aplicarFiltros() {
-        _produtos.value = todos.filter { pr ->
+        val lista = todos.value ?: return
+
+        produtos.value = lista.filter { pr ->
             val correspondeTexto = textoAtual.isBlank() ||
                     pr.nome.contains(textoAtual, ignoreCase = true) ||
                     pr.sku.contains(textoAtual, ignoreCase = true)
@@ -45,4 +46,14 @@ class StockViewModel: ViewModel()
             correspondeTexto && correspondeCategoria
         }
     }
+
+    fun guardar(produto: Produto) = viewModelScope.launch {
+        if (produto.id == 0) dao.inserir(produto)
+        else dao.atualizar(produto)
+    }
+
+    fun eliminar(produto: Produto) = viewModelScope.launch {
+        dao.eliminar(produto)
+    }
+
 }
