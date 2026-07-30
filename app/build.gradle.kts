@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.google.devtools.ksp)
-
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -60,9 +59,6 @@ dependencies {
     ksp(libs.androidx.room.compiler)
 
     //listas
-    implementation("androidx.recyclerview:recyclerview:1.3.2")
+    implementation(libs.androidx.recyclerview)
 
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(libs.androidx.junit)
 }

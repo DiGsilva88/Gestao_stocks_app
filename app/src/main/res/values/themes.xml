@@ -17,6 +17,13 @@
         <item name="android:textColor">@color/text_primary</item>
         <item name="chipStrokeColor">@color/text_muted</item>
         <item name="chipStrokeWidth">1dp</item>
+        <item name="checkedIconTint">@color/accent</item>
+        <item name="chipSurfaceColor">@color/card</item>
+    </style>
+
+    <style name="IndicadorNav"
+        parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/accent</item>
     </style>
 
     <style name="Theme.Gestão_stocks" parent="Base.Theme.Gestão_stocks" />

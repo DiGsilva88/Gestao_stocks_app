@@ -49,20 +49,20 @@
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipTodos"
-                style="@style/Widget.Material3.Chip.Filter"
+                style="@style/ChipFiltro"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Todos"
                 android:checked="true" />
 
             <com.google.android.material.chip.Chip
-                style="@style/Widget.Material3.Chip.Filter"
+                style="@style/ChipFiltro"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Motores" />
 
             <com.google.android.material.chip.Chip
-                style="@style/Widget.Material3.Chip.Filter"
+                style="@style/ChipFiltro"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Sensores" />
