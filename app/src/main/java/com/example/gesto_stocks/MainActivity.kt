@@ -20,12 +20,11 @@ class MainActivity : AppCompatActivity() {
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
 
-        setSupportActionBar(binding.toolbar)
+
 
         val config = AppBarConfiguration(
             setOf(R.id.inicioFragment, R.id.stockFragment, R.id.alertasFragment)
         )
-        binding.toolbar.setupWithNavController(navController, config)
 
         binding.bottomNavigation.setupWithNavController(navController)
     }

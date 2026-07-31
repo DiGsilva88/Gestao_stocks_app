@@ -197,8 +197,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/text_primary"
-                        android:textSize="22sp"
-                        tools:text="28 456 €" />
+                        tools:text="28 456 €"
+                        android:maxLines="1"
+                        android:textSize="18sp"/>
 
                     <TextView
                         android:layout_width="wrap_content"

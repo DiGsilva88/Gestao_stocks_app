@@ -42,4 +42,10 @@
 
     </fragment>
 
+    <fragment
+        android:id="@+id/perfilFragment"
+        android:name="com.example.gesto_stocks.ui.perfil.PerfilFragment"
+        android:label="Perfil"
+        tools:layout="@layout/fragment_perfil" />
+
 </navigation>

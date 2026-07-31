@@ -18,7 +18,7 @@ interface UtilizadorDao {
     suspend fun buscarPorId(id: Int): Utilizador?
 
     @Insert
-    suspend fun inserir(utilizador: Utilizador)
+    suspend fun inserir(utilizador: Utilizador): Long
 
     @Update
     suspend fun atualizar(utilizador: Utilizador)

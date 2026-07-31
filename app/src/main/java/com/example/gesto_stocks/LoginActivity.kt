@@ -3,11 +3,13 @@ package com.example.gesto_stocks
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
+import com.example.gesto_stocks.data.local.StockifyDatabase
 import com.example.gesto_stocks.databinding.ActivityLoginBinding
+import com.example.gesto_stocks.util.Sessao
+import com.example.gesto_stocks.util.hashPassword
+import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
 
@@ -15,29 +17,42 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val dao = StockifyDatabase.obter(this).utilizadorDao()
+        val sessao = Sessao(this)
+
         binding.btnEntrar.setOnClickListener {
-            val email = binding.editEmail.text.toString().trim()
-            val pass = binding.editPassword.text.toString()
-            if (email.isEmpty() || pass.isEmpty()) {
-                Toast.makeText(this, "Preenche email e password", Toast.LENGTH_SHORT).show()
+            val email = binding.editEmail.text.toString().trim().lowercase()
+            val password = binding.editPassword.text.toString()
+
+            if (email.isEmpty() || password.isEmpty()) {
+                aviso("Preenche os dois campos")
                 return@setOnClickListener
             }
-            startActivity(Intent(this, MainActivity::class.java))
-            finish()
-        }
-        binding.txtIrRegisto.setOnClickListener {
-            startActivity(Intent(this, RegistoActivity::class.java))
-            // ponytail: sem ecrã de registo ainda, adicionar quando existir RegistoActivity
+
+            lifecycleScope.launch {
+                val utilizador = dao.buscarPorEmail(email)
+
+                if (utilizador == null ||
+                    utilizador.passwordHash != hashPassword(password)) {
+                    aviso("Email ou password incorretos")
+                    return@launch
+                }
+
+                sessao.guardarUtilizador(utilizador.id)
+                startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                finish()
+            }
         }
 
-        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
-            val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(bars.left, bars.top, bars.right, bars.bottom)
-            insets
+        binding.txtIrRegisto.setOnClickListener {
+            startActivity(Intent(this, RegistoActivity::class.java))
         }
+    }
+
+    private fun aviso(texto: String) {
+        Toast.makeText(this, texto, Toast.LENGTH_SHORT).show()
     }
 }

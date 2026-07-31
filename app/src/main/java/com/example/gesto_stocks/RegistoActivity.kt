@@ -1,9 +1,16 @@
 package com.example.gesto_stocks
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import com.example.gesto_stocks.data.local.StockifyDatabase
+import com.example.gesto_stocks.data.model.Utilizador
 import com.example.gesto_stocks.databinding.ActivityRegistoBinding
+import com.example.gesto_stocks.util.Sessao
+import com.example.gesto_stocks.util.hashPassword
+import kotlinx.coroutines.launch
 
 class RegistoActivity : AppCompatActivity() {
 
@@ -14,17 +21,37 @@ class RegistoActivity : AppCompatActivity() {
         binding = ActivityRegistoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.btnRegistar.setOnClickListener {
-            if (validar()) {
+        val dao = StockifyDatabase.obter(this).utilizadorDao()
+        val sessao = Sessao(this)
 
-                // Dia 11: gravar com o UtilizadorDao e guardar a sessão
-                aviso("Dados válidos. Falta gravar na base de dados.")
+        binding.btnRegistar.setOnClickListener {
+            if (!validar()) return@setOnClickListener
+
+            val nome = binding.editNome.text.toString().trim()
+            val email = binding.editEmail.text.toString().trim().lowercase()
+            val password = binding.editPassword.text.toString()
+
+            lifecycleScope.launch {
+                if (dao.buscarPorEmail(email) != null) {
+                    aviso("Já existe uma conta com este email")
+                    return@launch
+                }
+
+                val id = dao.inserir(
+                    Utilizador(
+                        nome = nome,
+                        email = email,
+                        passwordHash = hashPassword(password)
+                    )
+                )
+
+                sessao.guardarUtilizador(id.toInt())
+                startActivity(Intent(this@RegistoActivity, MainActivity::class.java))
+                finishAffinity()
             }
         }
 
-        binding.txtIrLogin.setOnClickListener {
-            finish()
-        }
+        binding.txtIrLogin.setOnClickListener { finish() }
     }
 
     private fun validar(): Boolean {
