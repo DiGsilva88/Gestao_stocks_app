@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background">
@@ -11,117 +12,179 @@
         android:orientation="vertical"
         android:padding="20dp">
 
-        <TextView
-            android:id="@+id/txtTitulo"
-            android:layout_width="wrap_content"
+        <!-- Cabeçalho -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:text="Novo produto"
-            android:textColor="@color/text_primary"
-            android:textSize="24sp" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="24dp">
+
+            <TextView
+                android:id="@+id/txtTitulo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Novo Produto"
+                android:textColor="@color/text_primary"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <ImageButton
+                android:id="@+id/btnFechar"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/bg_campo"
+                android:src="@android:drawable/ic_menu_close_clear_cancel"
+                android:contentDescription="Fechar"
+                app:tint="@color/text_primary" />
+
+        </LinearLayout>
+
+        <!-- Nome -->
+        <TextView
+            style="@style/RotuloCampo"
+            android:text="NOME DO PRODUTO" />
 
         <EditText
             android:id="@+id/editNome"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:hint="Nome do produto"
-            android:background="@color/card"
-            android:padding="14dp"
-            android:textColor="@color/text_primary"
-            android:textColorHint="@color/text_muted"
-            android:inputType="text"
-            android:maxLines="1"
-            android:importantForAutofill="no" />
+            style="@style/CampoTexto"
+            android:inputType="text" />
 
-        <EditText
-            android:id="@+id/editSku"
+        <!-- SKU e Preço lado a lado -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:hint="SKU"
-            android:background="@color/card"
-            android:padding="14dp"
-            android:textColor="@color/text_primary"
-            android:textColorHint="@color/text_muted"
-            android:inputType="text"
-            android:maxLines="1"
-            android:importantForAutofill="no" />
+            android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/editCategoria"
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="6dp"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/RotuloCampo"
+                    android:text="SKU" />
+
+                <EditText
+                    android:id="@+id/editSku"
+                    style="@style/CampoTexto"
+                    android:inputType="text" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="6dp"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/RotuloCampo"
+                    android:text="PREÇO (€)" />
+
+                <EditText
+                    android:id="@+id/editPreco"
+                    style="@style/CampoTexto"
+                    android:inputType="numberDecimal" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Categoria -->
+        <TextView
+            style="@style/RotuloCampo"
+            android:text="CATEGORIA" />
+
+        <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:hint="Categoria"
-            android:background="@color/card"
-            android:padding="14dp"
-            android:textColor="@color/text_primary"
-            android:textColorHint="@color/text_muted"
-            android:inputType="text"
-            android:maxLines="1"
-            android:importantForAutofill="no" />
+            android:layout_marginBottom="8dp"
+            android:scrollbars="none">
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipCategorias"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:singleLine="true"
+                app:singleSelection="true"
+                app:selectionRequired="true">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipMotores"
+                    style="@style/ChipFiltro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Motores"
+                    android:checked="true" />
+
+                <com.google.android.material.chip.Chip
+                    style="@style/ChipFiltro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sensores" />
+
+                <com.google.android.material.chip.Chip
+                    style="@style/ChipFiltro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cabos" />
+
+                <com.google.android.material.chip.Chip
+                    style="@style/ChipFiltro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Filtros" />
+
+                <com.google.android.material.chip.Chip
+                    style="@style/ChipFiltro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Válvulas" />
+
+            </com.google.android.material.chip.ChipGroup>
+
+        </HorizontalScrollView>
+
+        <!-- Fornecedor -->
+        <TextView
+            style="@style/RotuloCampo"
+            android:text="FORNECEDOR" />
 
         <EditText
             android:id="@+id/editFornecedor"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:hint="Fornecedor (opcional)"
-            android:background="@color/card"
-            android:padding="14dp"
-            android:textColor="@color/text_primary"
-            android:textColorHint="@color/text_muted"
-            android:inputType="text"
-            android:maxLines="1"
-            android:importantForAutofill="no" />
+            style="@style/CampoTexto"
+            android:inputType="text" />
 
-        <EditText
-            android:id="@+id/editPreco"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:hint="Preço (€)"
-            android:background="@color/card"
-            android:padding="14dp"
-            android:textColor="@color/text_primary"
-            android:textColorHint="@color/text_muted"
-            android:inputType="numberDecimal"
-            android:maxLines="1"
-            android:importantForAutofill="no" />
-
-        <EditText
-            android:id="@+id/editQuantidade"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:hint="Quantidade em stock"
-            android:background="@color/card"
-            android:padding="14dp"
-            android:textColor="@color/text_primary"
-            android:textColorHint="@color/text_muted"
-            android:inputType="number"
-            android:maxLines="1"
-            android:importantForAutofill="no" />
+        <!-- Stock mínimo -->
+        <TextView
+            style="@style/RotuloCampo"
+            android:text="STOCK MÍNIMO" />
 
         <EditText
             android:id="@+id/editStockMinimo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:hint="Stock mínimo"
-            android:background="@color/card"
-            android:padding="14dp"
-            android:textColor="@color/text_primary"
-            android:textColorHint="@color/text_muted"
-            android:inputType="number"
-            android:maxLines="1"
-            android:importantForAutofill="no" />
+            style="@style/CampoTexto"
+            android:inputType="number" />
+
+        <!-- Quantidade -->
+        <TextView
+            style="@style/RotuloCampo"
+            android:text="QUANTIDADE EM STOCK" />
+
+        <EditText
+            android:id="@+id/editQuantidade"
+            style="@style/CampoTexto"
+            android:inputType="number" />
 
         <Button
             android:id="@+id/btnGuardar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:text="Guardar"
             android:backgroundTint="@color/accent"
             android:textColor="@color/contrast" />
@@ -135,15 +198,6 @@
             android:backgroundTint="@color/card"
             android:textColor="@color/critico"
             android:visibility="gone" />
-
-        <Button
-            android:id="@+id/btnCancelar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="Cancelar"
-            android:backgroundTint="@color/card"
-            android:textColor="@color/text_muted" />
 
     </LinearLayout>
 

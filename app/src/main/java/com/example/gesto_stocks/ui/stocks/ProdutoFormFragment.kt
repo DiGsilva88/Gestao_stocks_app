@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.gesto_stocks.data.local.StockifyDatabase
 import com.example.gesto_stocks.data.model.Produto
 import com.example.gesto_stocks.databinding.FragmentProdutoFormBinding
+import com.google.android.material.chip.Chip
 import kotlinx.coroutines.launch
 
 class ProdutoFormFragment : Fragment() {
@@ -40,15 +41,14 @@ class ProdutoFormFragment : Fragment() {
         produtoId = arguments?.getInt("produtoId") ?: -1
 
         if (produtoId != -1) {
-            binding.txtTitulo.text = "Editar produto"
+            binding.txtTitulo.text = "Editar Produto"
             binding.btnEliminar.visibility = View.VISIBLE
             carregarProduto()
         }
 
-
         binding.btnGuardar.setOnClickListener { guardar() }
         binding.btnEliminar.setOnClickListener { confirmarEliminar() }
-        binding.btnCancelar.setOnClickListener { findNavController().navigateUp() }
+        binding.btnFechar.setOnClickListener { findNavController().navigateUp() }
     }
 
     private fun carregarProduto() {
@@ -60,18 +60,34 @@ class ProdutoFormFragment : Fragment() {
 
             binding.editNome.setText(pr.nome)
             binding.editSku.setText(pr.sku)
-            binding.editCategoria.setText(pr.categoria)
             binding.editFornecedor.setText(pr.fornecedor)
             binding.editPreco.setText(pr.preco.toString())
             binding.editQuantidade.setText(pr.quantidade.toString())
             binding.editStockMinimo.setText(pr.stockMinimo.toString())
+
+            selecionarChip(pr.categoria)
         }
+    }
+
+    private fun selecionarChip(categoria: String) {
+        for (i in 0 until binding.chipCategorias.childCount) {
+            val chip = binding.chipCategorias.getChildAt(i) as Chip
+            if (chip.text.toString() == categoria) {
+                chip.isChecked = true
+                return
+            }
+        }
+    }
+
+    private fun categoriaEscolhida(): String {
+        val idChip = binding.chipCategorias.checkedChipId
+        if (idChip == View.NO_ID) return "Motores"
+        return binding.chipCategorias.findViewById<Chip>(idChip).text.toString()
     }
 
     private fun guardar() {
         val nome = binding.editNome.text.toString().trim()
         val sku = binding.editSku.text.toString().trim()
-        val categoria = binding.editCategoria.text.toString().trim()
 
         if (nome.isEmpty()) {
             binding.editNome.error = "O nome é obrigatório"
@@ -81,16 +97,12 @@ class ProdutoFormFragment : Fragment() {
             binding.editSku.error = "O SKU é obrigatório"
             return
         }
-        if (categoria.isEmpty()) {
-            binding.editCategoria.error = "A categoria é obrigatória"
-            return
-        }
 
         val produto = Produto(
             id = produtoId.takeIf { it != -1 } ?: 0,
             nome = nome,
             sku = sku,
-            categoria = categoria,
+            categoria = categoriaEscolhida(),
             fornecedor = binding.editFornecedor.text.toString().trim(),
             preco = binding.editPreco.text.toString().toDoubleOrNull() ?: 0.0,
             quantidade = binding.editQuantidade.text.toString().toIntOrNull() ?: 0,

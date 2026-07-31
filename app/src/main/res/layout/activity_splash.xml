@@ -11,9 +11,10 @@
     <ImageView
         android:layout_width="88dp"
         android:layout_height="88dp"
-        android:src="@drawable/ic_inventory"
+        android:src="@drawable/ic_inventory1"
         android:contentDescription="Logótipo Stockify"
         app:tint="@color/accent" />
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -21,8 +22,7 @@
         android:layout_marginTop="20dp"
         android:text="Stockify"
         android:textColor="@color/text_primary"
-        android:textSize="30sp" />
-
+        android:textSize="40sp" />
 
     <TextView
         android:layout_width="wrap_content"
