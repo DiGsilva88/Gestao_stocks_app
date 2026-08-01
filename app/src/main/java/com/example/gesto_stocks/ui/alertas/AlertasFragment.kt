@@ -18,9 +18,8 @@ class AlertasFragment : Fragment() {
 
     private val adapter = AlertaAdapter { produto ->
         val args = Bundle().apply { putInt("produtoId", produto.id) }
-        findNavController().navigate(R.id.acaoStockParaForm, args)
+        findNavController().navigate(R.id.acaoAlertasParaForm, args)
     }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
