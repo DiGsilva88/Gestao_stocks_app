@@ -2,9 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/perfilFragment"
+        android:icon="@drawable/ic_profile"
+        android:title="Perfil" />
+
+    <item
         android:id="@+id/inicioFragment"
         android:icon="@drawable/ic_home"
-        android:title="Início" />
+        android:title="Home" />
 
     <item
         android:id="@+id/stockFragment"
@@ -16,10 +21,7 @@
         android:icon="@drawable/ic_warning"
         android:title="Alertas" />
 
-    <item
-        android:id="@+id/perfilFragment"
-        android:icon="@drawable/ic_profile"
-        android:title="Perfil" />
+
 
 
 </menu>
