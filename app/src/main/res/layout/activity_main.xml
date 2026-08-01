@@ -29,7 +29,7 @@
         android:background="@color/card"
         app:elevation="0dp"
         app:itemActiveIndicatorStyle="@style/IndicadorNav"
-        app:itemIconTint="@color/accent"
+        app:itemIconTint="@color/nav_icone"
         app:itemTextColor="@color/accent"
         app:menu="@menu/bottom_nav_menu" />
 

@@ -9,17 +9,17 @@
     <item
         android:id="@+id/inicioFragment"
         android:icon="@drawable/ic_home"
-        android:title="Home" />
+        android:title="Painel" />
 
     <item
         android:id="@+id/stockFragment"
         android:icon="@drawable/ic_inventory1"
-        android:title="Stock" />
+        android:title="Inventário" />
 
     <item
         android:id="@+id/alertasFragment"
         android:icon="@drawable/ic_warning"
-        android:title="Alertas" />
+        android:title="Reposição" />
 
 
 

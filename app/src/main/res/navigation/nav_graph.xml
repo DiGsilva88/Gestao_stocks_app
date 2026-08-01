@@ -8,13 +8,13 @@
     <fragment
         android:id="@+id/inicioFragment"
         android:name="com.example.gesto_stocks.ui.inicio.InicioFragment"
-        android:label="Início"
+        android:label="Painel"
         tools:layout="@layout/fragment_inicio" />
 
     <fragment
         android:id="@+id/stockFragment"
         android:name="com.example.gesto_stocks.ui.stocks.StockFragment"
-        android:label="Stock"
+        android:label="Inventário"
         tools:layout="@layout/fragment_stock">
 
         <action
@@ -26,7 +26,7 @@
     <fragment
         android:id="@+id/alertasFragment"
         android:name="com.example.gesto_stocks.ui.alertas.AlertasFragment"
-        android:label="Alertas"
+        android:label="Reposição"
         tools:layout="@layout/fragment_alertas" />
 
     <fragment
