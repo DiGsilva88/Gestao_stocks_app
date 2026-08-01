@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -61,9 +62,26 @@ class StockFragment : Fragment() {
             viewModel.filtrarCategoria(categoria)
         }
 
+        binding.btnOrdenar.setOnClickListener { mostrarMenuOrdenacao(it) }
+
         binding.fabAdicionar.setOnClickListener {
             findNavController().navigate(R.id.acaoStockParaForm)
         }
+    }
+
+    private fun mostrarMenuOrdenacao(ancora: View) {
+        val ctx = android.view.ContextThemeWrapper(requireContext(), R.style.MenuPopup)
+        val menu = PopupMenu(ctx, ancora)
+
+        menu.menu.add(0, 0, 0, "Nome (A-Z)")
+        menu.menu.add(0, 1, 1, "Quantidade (menor primeiro)")
+        menu.menu.add(0, 2, 2, "Valor (maior primeiro)")
+
+        menu.setOnMenuItemClickListener { item ->
+            viewModel.ordenar(item.itemId)
+            true
+        }
+        menu.show()
     }
 
     override fun onDestroyView() {

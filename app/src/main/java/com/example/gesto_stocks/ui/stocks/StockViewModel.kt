@@ -18,6 +18,13 @@ class StockViewModel(app: Application) : AndroidViewModel(app) {
     private var textoAtual = ""
     private var categoriaAtual = "Todos"
 
+    private var ordenacao = 0   // 0 nome, 1 quantidade, 2 valor
+
+    fun ordenar(modo: Int) {
+        ordenacao = modo
+        aplicarFiltros()
+    }
+
     val produtos = MediatorLiveData<List<Produto>>().apply {
         addSource(todos) { aplicarFiltros() }
     }
@@ -35,7 +42,7 @@ class StockViewModel(app: Application) : AndroidViewModel(app) {
     private fun aplicarFiltros() {
         val lista = todos.value ?: return
 
-        produtos.value = lista.filter { pr ->
+        val filtrada = lista.filter { pr ->
             val correspondeTexto = textoAtual.isBlank() ||
                     pr.nome.contains(textoAtual, ignoreCase = true) ||
                     pr.sku.contains(textoAtual, ignoreCase = true)
@@ -45,7 +52,15 @@ class StockViewModel(app: Application) : AndroidViewModel(app) {
 
             correspondeTexto && correspondeCategoria
         }
+
+        produtos.value = when (ordenacao) {
+            1 -> filtrada.sortedBy { it.quantidade }
+            2 -> filtrada.sortedByDescending { it.preco * it.quantidade }
+            else -> filtrada.sortedBy { it.nome.lowercase() }
+        }
     }
+
+
 
     fun guardar(produto: Produto) = viewModelScope.launch {
         if (produto.id == 0) dao.inserir(produto)
