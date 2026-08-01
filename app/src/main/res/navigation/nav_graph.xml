@@ -27,7 +27,13 @@
         android:id="@+id/alertasFragment"
         android:name="com.example.gesto_stocks.ui.alertas.AlertasFragment"
         android:label="Reposição"
-        tools:layout="@layout/fragment_alertas" />
+        tools:layout="@layout/fragment_alertas" >
+
+    <action
+        android:id="@+id/acaoAlertasParaForm"
+        app:destination="@id/produtoFormFragment" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/produtoFormFragment"
