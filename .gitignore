@@ -12,6 +12,9 @@ captures/
 .idea/
 *.iml
 
+app/release/
+*.apk
+*.aab
 
 .artifacts/
 

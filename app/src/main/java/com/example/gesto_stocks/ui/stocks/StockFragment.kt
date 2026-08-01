@@ -42,6 +42,10 @@ class StockFragment : Fragment() {
 
         viewModel.produtos.observe(viewLifecycleOwner) { lista ->
             adapter.submitList(lista)
+
+            val vazio = lista.isEmpty()
+            binding.txtVazio.visibility = if (vazio) View.VISIBLE else View.GONE
+            binding.recyclerProdutos.visibility = if (vazio) View.GONE else View.VISIBLE
         }
 
         binding.editPesquisa.doAfterTextChanged { texto ->
