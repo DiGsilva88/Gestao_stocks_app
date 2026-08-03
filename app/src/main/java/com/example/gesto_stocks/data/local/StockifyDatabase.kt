@@ -17,7 +17,7 @@ import com.example.gesto_stocks.util.hashPassword
  */
 @Database(
     entities = [Produto::class, Utilizador::class],
-    version = 1
+    version = 2
 )
 abstract class StockifyDatabase : RoomDatabase() {
 
@@ -67,6 +67,9 @@ abstract class StockifyDatabase : RoomDatabase() {
                             }
                         }
                     })
+                    // BD local de demonstração: sem migração formal, recria o
+                    // schema (perde dados locais) quando a versão muda.
+                    .fallbackToDestructiveMigration(true)
                     .build()
                 INSTANCIA = db
                 db
