@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/inicioFragment"
         android:name="com.example.gesto_stocks.ui.inicio.InicioFragment"
-        android:label="Início"
+        android:label="Painel"
         tools:layout="@layout/fragment_inicio" />
 
     <fragment
@@ -24,8 +24,14 @@
     <fragment
         android:id="@+id/alertasFragment"
         android:name="com.example.gesto_stocks.ui.alertas.AlertasFragment"
-        android:label="Alertas"
-        tools:layout="@layout/fragment_alertas" />
+        android:label="Reposição"
+        tools:layout="@layout/fragment_alertas" >
+
+    <action
+        android:id="@+id/acaoAlertasParaForm"
+        app:destination="@id/produtoFormFragment" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/produtoFormFragment"
