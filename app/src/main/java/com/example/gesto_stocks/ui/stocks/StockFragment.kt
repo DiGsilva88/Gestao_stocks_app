@@ -14,7 +14,6 @@ import com.example.gesto_stocks.R
 import com.example.gesto_stocks.databinding.FragmentStockBinding
 import com.google.android.material.chip.Chip
 
-
 /**
  * Ecrã de listagem de produtos.
  * Permite pesquisar por nome ou SKU, filtrar por categoria, ordenar a lista
@@ -44,10 +43,6 @@ class StockFragment : Fragment() {
         _binding = FragmentStockBinding.inflate(inflater, container, false)
         return binding.root
     }
-
-    // A configuração da vista é feita aqui, e não no onCreateView,
-    // porque nesta fase a vista já está criada e pronta a receber dados
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -90,17 +85,10 @@ class StockFragment : Fragment() {
         }
     }
 
-<<<<<<< HEAD
     /** Mostra as opções de ordenação da lista junto ao botão. */
     private fun mostrarMenuOrdenacao(ancora: View) {
         val ctx = android.view.ContextThemeWrapper(requireContext(), R.style.MenuPopup)
         val menu = PopupMenu(ctx, ancora)
-=======
-    private fun mostrarMenuOrdenacao(ancora: View) {
-        val ctx = android.view.ContextThemeWrapper(requireContext(), R.style.MenuPopup)
-        val menu = PopupMenu(ctx, ancora)
-
->>>>>>> origin/historico-movimentos
         menu.menu.add(0, 0, 0, "Nome (A-Z)")
         menu.menu.add(0, 1, 1, "Quantidade (menor primeiro)")
         menu.menu.add(0, 2, 2, "Valor (maior primeiro)")
@@ -118,4 +106,4 @@ class StockFragment : Fragment() {
         // É a causa mais comum de fugas de memória em aplicações com Fragments
         _binding = null
     }
-}}
+}
