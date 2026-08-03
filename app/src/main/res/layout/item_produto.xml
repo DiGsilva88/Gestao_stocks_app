@@ -56,6 +56,15 @@
             tools:text="84" />
 
         <TextView
+            android:id="@+id/txtPreco"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textColor="@color/text_muted"
+            android:textSize="13sp"
+            tools:text="189,90 €" />
+
+        <TextView
             android:id="@+id/txtEstado"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -64,6 +73,5 @@
             tools:text="OK" />
 
     </LinearLayout>
-
 
 </LinearLayout>

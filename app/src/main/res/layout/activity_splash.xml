@@ -30,7 +30,7 @@
         android:layout_marginTop="6dp"
         android:text="Gestão de armazém"
         android:textColor="@color/text_muted"
-        android:textSize="15sp" />
+        android:textSize="18sp" />
 
 
     <TextView

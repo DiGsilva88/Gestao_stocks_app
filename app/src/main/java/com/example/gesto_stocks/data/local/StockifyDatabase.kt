@@ -1,28 +1,31 @@
 package com.example.gesto_stocks.data.local
 
+import android.content.ContentValues
 import android.content.Context
+import android.database.sqlite.SQLiteDatabase
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.gesto_stocks.data.model.Produto
 import com.example.gesto_stocks.data.model.Utilizador
-import androidx.sqlite.db.SupportSQLiteDatabase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import com.example.gesto_stocks.util.hashPassword
 
-
+/**
+ * Base de dados local da aplicação.
+ * Contém duas tabelas: produtos e utilizadores.
+ */
 @Database(
     entities = [Produto::class, Utilizador::class],
     version = 1
 )
-
-abstract class StockifyDatabase: RoomDatabase() {
+abstract class StockifyDatabase : RoomDatabase() {
 
     abstract fun produtoDao(): ProdutoDao
     abstract fun utilizadorDao(): UtilizadorDao
 
     companion object {
+        // Instância única: evita abrir várias ligações à mesma base de dados
         @Volatile
         private var INSTANCIA: StockifyDatabase? = null
 
@@ -33,11 +36,34 @@ abstract class StockifyDatabase: RoomDatabase() {
                     StockifyDatabase::class.java,
                     "stockify.db"
                 )
+                    // Preenche a base de dados na primeira execução. Usa SQL direto
+                    // (não os DAOs do Room) e corre de forma síncrona: onCreate() é
+                    // chamado a partir da própria abertura da BD, antes de qualquer
+                    // query (ex.: o login) poder ser executada — um coroutine lançado
+                    // em segundo plano ou um runBlocking a chamar suspend DAOs no
+                    // executor do Room causaria uma corrida ou um deadlock.
                     .addCallback(object : Callback() {
                         override fun onCreate(db: SupportSQLiteDatabase) {
                             super.onCreate(db)
-                            CoroutineScope(Dispatchers.IO).launch {
-                                INSTANCIA?.produtoDao()?.inserirTodos(exemplos())
+
+                            exemplos().forEach { produto ->
+                                db.insert("produtos", SQLiteDatabase.CONFLICT_ABORT, ContentValues().apply {
+                                    put("nome", produto.nome)
+                                    put("sku", produto.sku)
+                                    put("categoria", produto.categoria)
+                                    put("fornecedor", produto.fornecedor)
+                                    put("preco", produto.preco)
+                                    put("quantidade", produto.quantidade)
+                                    put("stockMinimo", produto.stockMinimo)
+                                })
+                            }
+
+                            utilizadoresIniciais().forEach { utilizador ->
+                                db.insert("utilizadores", SQLiteDatabase.CONFLICT_ABORT, ContentValues().apply {
+                                    put("nome", utilizador.nome)
+                                    put("email", utilizador.email)
+                                    put("passwordHash", utilizador.passwordHash)
+                                })
                             }
                         }
                     })
@@ -47,6 +73,8 @@ abstract class StockifyDatabase: RoomDatabase() {
             }
         }
 
+        // Produtos de demonstração: incluem os três estados possíveis
+        // (esgotado, abaixo do mínimo e normal)
         private fun exemplos() = listOf(
             Produto(nome = "Motor Elétrico X200", sku = "SKU-1042",
                 categoria = "Motores", fornecedor = "ElectroTech",
@@ -64,7 +92,24 @@ abstract class StockifyDatabase: RoomDatabase() {
                 categoria = "Válvulas", fornecedor = "PneuSys",
                 preco = 134.20, quantidade = 8, stockMinimo = 15)
         )
+
+        // Contas de acesso definidas no enunciado do trabalho prático
+        private fun utilizadoresIniciais() = listOf(
+            Utilizador(
+                nome = "Administrador",
+                email = "admin",
+                passwordHash = hashPassword("password123")
+            ),
+            Utilizador(
+                nome = "Cesae",
+                email = "cesae",
+                passwordHash = hashPassword("cesae")
+            ),
+            Utilizador(
+                nome = "Diana",
+                email = "diana",
+                passwordHash = hashPassword("diana123")
+            )
+        )
     }
-        }
-
-
+}

@@ -20,6 +20,9 @@ interface UtilizadorDao {
     @Insert
     suspend fun inserir(utilizador: Utilizador): Long
 
+    @Insert
+    suspend fun inserirTodos(utilizadores: List<Utilizador>)
+
     @Update
     suspend fun atualizar(utilizador: Utilizador)
 
