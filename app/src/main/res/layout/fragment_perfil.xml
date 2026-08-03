@@ -179,6 +179,15 @@
         </LinearLayout>
 
         <Button
+            android:id="@+id/btnEditarPerfil"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Editar perfil"
+            android:backgroundTint="@color/accent"
+            android:textColor="@color/contrast" />
+
+        <Button
             android:id="@+id/btnTerminarSessao"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

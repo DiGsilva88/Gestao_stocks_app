@@ -13,6 +13,8 @@ import com.example.gesto_stocks.data.local.StockifyDatabase
 import com.example.gesto_stocks.databinding.FragmentPerfilBinding
 import com.example.gesto_stocks.util.Sessao
 import kotlinx.coroutines.launch
+import androidx.navigation.fragment.findNavController
+import com.example.gesto_stocks.R
 
 class PerfilFragment : Fragment() {
 
@@ -35,6 +37,9 @@ class PerfilFragment : Fragment() {
         observarProdutos()
 
         binding.btnTerminarSessao.setOnClickListener { confirmarSaida() }
+        binding.btnEditarPerfil.setOnClickListener {
+            findNavController().navigate(R.id.acaoPerfilParaEditar)
+        }
     }
 
     private fun carregarUtilizador() {

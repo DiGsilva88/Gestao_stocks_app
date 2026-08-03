@@ -39,6 +39,18 @@
         android:id="@+id/perfilFragment"
         android:name="com.example.gesto_stocks.ui.perfil.PerfilFragment"
         android:label="Perfil"
-        tools:layout="@layout/fragment_perfil" />
+        tools:layout="@layout/fragment_perfil">
+
+        <action
+            android:id="@+id/acaoPerfilParaEditar"
+            app:destination="@id/editarPerfilFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/editarPerfilFragment"
+        android:name="com.example.gesto_stocks.ui.perfil.EditarPerfilFragment"
+        android:label="Editar Perfil"
+        tools:layout="@layout/fragment_editar_perfil" />
 
 </navigation>
