@@ -15,13 +15,11 @@
         android:id="@+id/stockFragment"
         android:name="com.example.gesto_stocks.ui.stocks.StockFragment"
         android:label="Stock"
-        tools:layout="@layout/fragment_stock">
+        tools:layout="@layout/fragment_stock" />
 
-        <action
-            android:id="@+id/acaoStockParaForm"
-            app:destination="@id/produtoFormFragment" />
-
-    </fragment>
+    <action
+        android:id="@+id/acaoStockParaForm"
+        app:destination="@id/produtoFormFragment" />
 
     <fragment
         android:id="@+id/alertasFragment"

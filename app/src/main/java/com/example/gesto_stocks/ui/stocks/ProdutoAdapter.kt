@@ -8,11 +8,22 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.gesto_stocks.R
 import com.example.gesto_stocks.data.model.Produto
 import com.example.gesto_stocks.databinding.ItemProdutoBinding
+import java.text.NumberFormat
+import java.util.Locale
 
-class ProdutoAdapter(
-    private val onClick: (Produto) -> Unit
-) : ListAdapter<Produto, ProdutoAdapter.ProdutoVH>(DIFF) {
 
+
+///**
+// * Adapter da lista de produtos.
+// * Preenche cada linha com os dados de um produto e calcula o estado do stock.
+// */
+    class ProdutoAdapter(
+        private val onClick: (Produto) -> Unit
+    ) : ListAdapter<Produto, ProdutoAdapter.ProdutoVH>(DIFF) {
+
+        // Formata valores em euros com o separador decimal português
+        private val moeda: NumberFormat =
+            NumberFormat.getCurrencyInstance(Locale("pt", "PT"))
     inner class ProdutoVH(private val b: ItemProdutoBinding) :
         RecyclerView.ViewHolder(b.root) {
 
@@ -21,6 +32,10 @@ class ProdutoAdapter(
             b.txtNome.text = p.nome
             b.txtSku.text = "${p.sku} · ${p.categoria}"
             b.txtQuantidade.text = p.quantidade.toString()
+            b.txtPreco.text = moeda.format(p.preco)
+
+            // O estado não é guardado na base de dados:
+            // é calculado a partir da quantidade e do stock mínimo
 
             when {
                 p.quantidade == 0 -> {
@@ -47,6 +62,9 @@ class ProdutoAdapter(
 
     override fun onBindViewHolder(holder: ProdutoVH, position: Int) =
         holder.bind(getItem(position))
+
+
+    // Compara listas para atualizar apenas as linhas que mudaram
 
     companion object {
         private val DIFF = object : DiffUtil.ItemCallback<Produto>() {
