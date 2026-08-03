@@ -14,5 +14,6 @@ data class Produto(
     val fornecedor: String ="",
     val preco: Double = 0.0,
     val quantidade: Int,
-    val stockMinimo: Int
+    val stockMinimo: Int,
+    val imagemPath: String? = null
 )
