@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -89,10 +90,17 @@ class StockFragment : Fragment() {
         }
     }
 
+<<<<<<< HEAD
     /** Mostra as opções de ordenação da lista junto ao botão. */
     private fun mostrarMenuOrdenacao(ancora: View) {
         val ctx = android.view.ContextThemeWrapper(requireContext(), R.style.MenuPopup)
         val menu = PopupMenu(ctx, ancora)
+=======
+    private fun mostrarMenuOrdenacao(ancora: View) {
+        val ctx = android.view.ContextThemeWrapper(requireContext(), R.style.MenuPopup)
+        val menu = PopupMenu(ctx, ancora)
+
+>>>>>>> origin/historico-movimentos
         menu.menu.add(0, 0, 0, "Nome (A-Z)")
         menu.menu.add(0, 1, 1, "Quantidade (menor primeiro)")
         menu.menu.add(0, 2, 2, "Valor (maior primeiro)")

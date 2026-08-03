@@ -8,24 +8,32 @@
     <fragment
         android:id="@+id/inicioFragment"
         android:name="com.example.gesto_stocks.ui.inicio.InicioFragment"
-        android:label="Início"
+        android:label="Painel"
         tools:layout="@layout/fragment_inicio" />
 
     <fragment
         android:id="@+id/stockFragment"
         android:name="com.example.gesto_stocks.ui.stocks.StockFragment"
-        android:label="Stock"
-        tools:layout="@layout/fragment_stock" />
+        android:label="Inventário"
+        tools:layout="@layout/fragment_stock">
 
-    <action
-        android:id="@+id/acaoStockParaForm"
-        app:destination="@id/produtoFormFragment" />
+        <action
+            android:id="@+id/acaoStockParaForm"
+            app:destination="@id/produtoFormFragment" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/alertasFragment"
         android:name="com.example.gesto_stocks.ui.alertas.AlertasFragment"
-        android:label="Alertas"
-        tools:layout="@layout/fragment_alertas" />
+        android:label="Reposição"
+        tools:layout="@layout/fragment_alertas">
+
+        <action
+            android:id="@+id/acaoAlertasParaForm"
+            app:destination="@id/produtoFormFragment" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/produtoFormFragment"
