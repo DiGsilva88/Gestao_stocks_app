@@ -1,10 +1,13 @@
 package com.example.gesto_stocks.ui.stocks
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -13,8 +16,12 @@ import androidx.navigation.fragment.findNavController
 import com.example.gesto_stocks.data.local.StockifyDatabase
 import com.example.gesto_stocks.data.model.Produto
 import com.example.gesto_stocks.databinding.FragmentProdutoFormBinding
+import com.example.gesto_stocks.util.guardarImagemProduto
+import com.example.gesto_stocks.util.mostrarImagemProduto
 import com.google.android.material.chip.Chip
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * Guarda temporariamente os dados de um produto novo que não chegou a ser
@@ -29,11 +36,13 @@ private object Rascunho {
     var preco = ""
     var quantidade = ""
     var stockMinimo = ""
+    var imagemPath: String? = null
     var existe = false
 
     fun limpar() {
         nome = ""; sku = ""; categoria = ""; fornecedor = ""
         preco = ""; quantidade = ""; stockMinimo = ""
+        imagemPath = null
         existe = false
     }
 }
@@ -52,6 +61,20 @@ class ProdutoFormFragment : Fragment() {
 
     private var produtoId = -1
     private var produtoAtual: Produto? = null
+    private var imagemPathAtual: String? = null
+
+    private val escolherImagem = registerForActivityResult(
+        ActivityResultContracts.PickVisualMedia()
+    ) { uri: Uri? ->
+        if (uri == null) return@registerForActivityResult
+
+        lifecycleScope.launch {
+            imagemPathAtual = withContext(Dispatchers.IO) {
+                guardarImagemProduto(requireContext(), uri)
+            }
+            binding.imgProduto.mostrarImagemProduto(imagemPathAtual)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -66,6 +89,7 @@ class ProdutoFormFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         produtoId = arguments?.getInt("produtoId") ?: -1
+        binding.imgProduto.mostrarImagemProduto(null)
 
         if (produtoId != -1) {
             // Modo edição: carrega os dados guardados na base de dados
@@ -80,6 +104,11 @@ class ProdutoFormFragment : Fragment() {
         binding.btnGuardar.setOnClickListener { guardar() }
         binding.btnEliminar.setOnClickListener { confirmarEliminar() }
         binding.btnFechar.setOnClickListener { findNavController().navigateUp() }
+        binding.btnEscolherImagem.setOnClickListener {
+            escolherImagem.launch(
+                PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+            )
+        }
     }
 
     /** Carrega da base de dados o produto que está a ser editado. */
@@ -89,6 +118,8 @@ class ProdutoFormFragment : Fragment() {
         lifecycleScope.launch {
             val pr = dao.buscarPorId(produtoId) ?: return@launch
             produtoAtual = pr
+            imagemPathAtual = pr.imagemPath
+            binding.imgProduto.mostrarImagemProduto(imagemPathAtual)
 
             binding.editNome.setText(pr.nome)
             binding.editSku.setText(pr.sku)
@@ -110,6 +141,8 @@ class ProdutoFormFragment : Fragment() {
         binding.editQuantidade.setText(Rascunho.quantidade)
         binding.editStockMinimo.setText(Rascunho.stockMinimo)
         selecionarChip(Rascunho.categoria)
+        imagemPathAtual = Rascunho.imagemPath
+        binding.imgProduto.mostrarImagemProduto(imagemPathAtual)
     }
 //
 //    /** Guarda o conteúdo dos campos para o caso de o utilizador voltar. */
@@ -121,6 +154,7 @@ class ProdutoFormFragment : Fragment() {
         Rascunho.preco = binding.editPreco.text.toString()
         Rascunho.quantidade = binding.editQuantidade.text.toString()
         Rascunho.stockMinimo = binding.editStockMinimo.text.toString()
+        Rascunho.imagemPath = imagemPathAtual
         Rascunho.existe = true
     }
 //
@@ -166,7 +200,8 @@ class ProdutoFormFragment : Fragment() {
             // OrNull evita que a aplicação feche se o campo ficar vazio
             preco = binding.editPreco.text.toString().toDoubleOrNull() ?: 0.0,
             quantidade = binding.editQuantidade.text.toString().toIntOrNull() ?: 0,
-            stockMinimo = binding.editStockMinimo.text.toString().toIntOrNull() ?: 0
+            stockMinimo = binding.editStockMinimo.text.toString().toIntOrNull() ?: 0,
+            imagemPath = imagemPathAtual
         )
 
         viewModel.guardar(produto)

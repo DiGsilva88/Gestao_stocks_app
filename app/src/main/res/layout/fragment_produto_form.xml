@@ -2,6 +2,7 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background">
@@ -38,6 +39,33 @@
                 android:src="@android:drawable/ic_menu_close_clear_cancel"
                 android:contentDescription="Fechar"
                 app:tint="@color/text_primary" />
+
+        </LinearLayout>
+
+        <!-- Imagem -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="20dp">
+
+            <ImageView
+                android:id="@+id/imgProduto"
+                android:layout_width="88dp"
+                android:layout_height="88dp"
+                android:background="@drawable/bg_campo"
+                android:contentDescription="@null"
+                tools:src="@drawable/ic_produtos" />
+
+            <Button
+                android:id="@+id/btnEscolherImagem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Escolher imagem"
+                android:backgroundTint="@color/card"
+                android:textColor="@color/text_primary" />
 
         </LinearLayout>
 

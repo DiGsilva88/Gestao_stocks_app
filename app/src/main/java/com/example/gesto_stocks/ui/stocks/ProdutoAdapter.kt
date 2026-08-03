@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.gesto_stocks.R
 import com.example.gesto_stocks.data.model.Produto
 import com.example.gesto_stocks.databinding.ItemProdutoBinding
+import com.example.gesto_stocks.util.mostrarImagemProduto
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -29,6 +30,7 @@ import java.util.Locale
 
         fun bind(p: Produto) {
             val ctx = b.root.context
+            b.imgProduto.mostrarImagemProduto(p.imagemPath)
             b.txtNome.text = p.nome
             b.txtSku.text = "${p.sku} · ${p.categoria}"
             b.txtQuantidade.text = p.quantidade.toString()
