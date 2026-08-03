@@ -17,7 +17,7 @@ import com.example.gesto_stocks.util.hashPassword
  */
 @Database(
     entities = [Produto::class, Utilizador::class],
-    version = 2
+    version = 3
 )
 abstract class StockifyDatabase : RoomDatabase() {
 
@@ -64,6 +64,7 @@ abstract class StockifyDatabase : RoomDatabase() {
                         put("categoria", produto.categoria)
                         put("fornecedor", produto.fornecedor)
                         put("preco", produto.preco)
+                        put("precoCusto", produto.precoCusto)
                         put("quantidade", produto.quantidade)
                         put("stockMinimo", produto.stockMinimo)
                     })
@@ -92,19 +93,19 @@ abstract class StockifyDatabase : RoomDatabase() {
         private fun exemplos() = listOf(
             Produto(nome = "Motor Elétrico X200", sku = "SKU-1042",
                 categoria = "Motores", fornecedor = "ElectroTech",
-                preco = 189.90, quantidade = 84, stockMinimo = 20),
+                preco = 189.90, precoCusto = 120.00, quantidade = 84, stockMinimo = 20),
             Produto(nome = "Sensor de Proximidade S3", sku = "SKU-2087",
                 categoria = "Sensores", fornecedor = "SensorLab",
-                preco = 45.50, quantidade = 12, stockMinimo = 25),
+                preco = 45.50, precoCusto = 28.00, quantidade = 12, stockMinimo = 25),
             Produto(nome = "Cabo Blindado 4mm", sku = "SKU-3391",
                 categoria = "Cabos", fornecedor = "CaboPlus",
-                preco = 12.30, quantidade = 0, stockMinimo = 50),
+                preco = 12.30, precoCusto = 7.50, quantidade = 0, stockMinimo = 50),
             Produto(nome = "Filtro Industrial F9", sku = "SKU-4120",
                 categoria = "Filtros", fornecedor = "FiltroMax",
-                preco = 78.00, quantidade = 156, stockMinimo = 40),
+                preco = 78.00, precoCusto = 49.00, quantidade = 156, stockMinimo = 40),
             Produto(nome = "Válvula Pneumática V7", sku = "SKU-5205",
                 categoria = "Válvulas", fornecedor = "PneuSys",
-                preco = 134.20, quantidade = 8, stockMinimo = 15)
+                preco = 134.20, precoCusto = 85.00, quantidade = 8, stockMinimo = 15)
         )
 
         // Contas de acesso definidas no enunciado do trabalho prático

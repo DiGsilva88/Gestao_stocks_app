@@ -112,7 +112,7 @@
 
                 <TextView
                     style="@style/RotuloCampo"
-                    android:text="PREÇO (€)" />
+                    android:text="PREÇO VENDA (€)" />
 
                 <EditText
                     android:id="@+id/editPreco"
@@ -122,6 +122,15 @@
             </LinearLayout>
 
         </LinearLayout>
+
+        <TextView
+            style="@style/RotuloCampo"
+            android:text="PREÇO DE CUSTO (€)" />
+
+        <EditText
+            android:id="@+id/editPrecoCusto"
+            style="@style/CampoTexto"
+            android:inputType="numberDecimal" />
 
         <!-- Categoria -->
         <TextView
