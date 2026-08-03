@@ -55,6 +55,7 @@ import java.util.Locale
             }
 
             b.root.setOnClickListener { onClick(p) }
+            b.btnEditar.setOnClickListener { onClick(p) }
         }
     }
 

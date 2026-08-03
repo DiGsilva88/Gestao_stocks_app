@@ -34,6 +34,7 @@ private object Rascunho {
     var categoria = ""
     var fornecedor = ""
     var preco = ""
+    var precoCusto = ""
     var quantidade = ""
     var stockMinimo = ""
     var imagemPath: String? = null
@@ -41,7 +42,7 @@ private object Rascunho {
 
     fun limpar() {
         nome = ""; sku = ""; categoria = ""; fornecedor = ""
-        preco = ""; quantidade = ""; stockMinimo = ""
+        preco = ""; precoCusto = ""; quantidade = ""; stockMinimo = ""
         imagemPath = null
         existe = false
     }
@@ -125,6 +126,7 @@ class ProdutoFormFragment : Fragment() {
             binding.editSku.setText(pr.sku)
             binding.editFornecedor.setText(pr.fornecedor)
             binding.editPreco.setText(pr.preco.toString())
+            binding.editPrecoCusto.setText(pr.precoCusto.toString())
             binding.editQuantidade.setText(pr.quantidade.toString())
             binding.editStockMinimo.setText(pr.stockMinimo.toString())
 
@@ -138,6 +140,7 @@ class ProdutoFormFragment : Fragment() {
         binding.editSku.setText(Rascunho.sku)
         binding.editFornecedor.setText(Rascunho.fornecedor)
         binding.editPreco.setText(Rascunho.preco)
+        binding.editPrecoCusto.setText(Rascunho.precoCusto)
         binding.editQuantidade.setText(Rascunho.quantidade)
         binding.editStockMinimo.setText(Rascunho.stockMinimo)
         selecionarChip(Rascunho.categoria)
@@ -152,6 +155,7 @@ class ProdutoFormFragment : Fragment() {
         Rascunho.categoria = categoriaEscolhida()
         Rascunho.fornecedor = binding.editFornecedor.text.toString()
         Rascunho.preco = binding.editPreco.text.toString()
+        Rascunho.precoCusto = binding.editPrecoCusto.text.toString()
         Rascunho.quantidade = binding.editQuantidade.text.toString()
         Rascunho.stockMinimo = binding.editStockMinimo.text.toString()
         Rascunho.imagemPath = imagemPathAtual
@@ -199,6 +203,7 @@ class ProdutoFormFragment : Fragment() {
             fornecedor = binding.editFornecedor.text.toString().trim(),
             // OrNull evita que a aplicação feche se o campo ficar vazio
             preco = binding.editPreco.text.toString().toDoubleOrNull() ?: 0.0,
+            precoCusto = binding.editPrecoCusto.text.toString().toDoubleOrNull() ?: 0.0,
             quantidade = binding.editQuantidade.text.toString().toIntOrNull() ?: 0,
             stockMinimo = binding.editStockMinimo.text.toString().toIntOrNull() ?: 0,
             imagemPath = imagemPathAtual

@@ -155,8 +155,8 @@
                     android:layout_marginEnd="10dp"
                     android:background="@drawable/bg_icone"
                     android:padding="8dp"
-                    android:src="@drawable/ic_produtos"
-                    android:contentDescription="Produtos"
+                    android:src="@drawable/ic_euros"
+                    android:contentDescription="Receita total"
                     app:tint="@color/text_primary" />
 
                 <LinearLayout
@@ -165,17 +165,18 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/txtNumProdutos"
+                        android:id="@+id/txtReceitaTotal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/text_primary"
-                        android:textSize="22sp"
-                        tools:text="5" />
+                        android:textSize="18sp"
+                        android:maxLines="1"
+                        tools:text="142 300 €" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Produtos"
+                        android:text="Receita total"
                         android:textColor="@color/text_muted"
                         android:textSize="12sp" />
 
@@ -208,9 +209,9 @@
                     android:layout_marginEnd="10dp"
                     android:background="@drawable/bg_icone"
                     android:padding="8dp"
-                    android:src="@drawable/ic_warning"
-                    android:contentDescription="Em alerta"
-                    app:tint="@color/aviso" />
+                    android:src="@drawable/ic_money"
+                    android:contentDescription="Lucro total"
+                    app:tint="@color/text_primary" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -218,17 +219,18 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/txtEmAlerta"
+                        android:id="@+id/txtLucroTotal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/aviso"
-                        android:textSize="22sp"
-                        tools:text="3" />
+                        android:textColor="@color/text_primary"
+                        android:textSize="18sp"
+                        android:maxLines="1"
+                        tools:text="18 240 €" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Em alerta"
+                        android:text="Lucro total"
                         android:textColor="@color/text_muted"
                         android:textSize="12sp" />
 
@@ -252,9 +254,9 @@
                     android:layout_marginEnd="10dp"
                     android:background="@drawable/bg_icone"
                     android:padding="8dp"
-                    android:src="@drawable/ic_euros"
-                    android:contentDescription="Valor em stock"
-                    app:tint="@color/text_primary" />
+                    android:src="@drawable/ic_warning"
+                    android:contentDescription="Alertas de stock"
+                    app:tint="@color/aviso" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -262,18 +264,17 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/txtValorTotal"
+                        android:id="@+id/txtEmAlerta"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/text_primary"
-                        android:textSize="18sp"
-                        android:maxLines="1"
-                        tools:text="28 456 €" />
+                        android:textColor="@color/aviso"
+                        android:textSize="22sp"
+                        tools:text="3" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Valor em stock"
+                        android:text="Alertas de stock"
                         android:textColor="@color/text_muted"
                         android:textSize="12sp" />
 
@@ -290,6 +291,95 @@
             android:layout_marginTop="40dp"
             android:gravity="center"
             android:text="Ainda não há produtos.&#10;Toca no separador Stock para adicionar."
+            android:textColor="@color/text_muted"
+            android:textSize="14sp"
+            android:visibility="gone" />
+
+        <!-- Vendas por categoria -->
+        <LinearLayout
+            android:id="@+id/cartaoCategorias"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:orientation="vertical"
+            android:background="@color/card"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Vendas por Categoria"
+                android:textColor="@color/text_primary"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <com.example.gesto_stocks.ui.inicio.GraficoDonut
+                    android:id="@+id/graficoDonut"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp" />
+
+                <LinearLayout
+                    android:id="@+id/legendaCategorias"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="20dp"
+                    android:orientation="vertical" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Top produtos por receita -->
+        <TextView
+            android:id="@+id/txtTituloTop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="12dp"
+            android:text="Top Produtos por Receita"
+            android:textColor="@color/text_primary"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/containerTopProdutos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+        <!-- Alertas de stock baixo -->
+        <TextView
+            android:id="@+id/txtTituloAlertas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="12dp"
+            android:text="Alertas de Stock Baixo"
+            android:textColor="@color/text_primary"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerAlertas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
+            tools:listitem="@layout/item_alerta" />
+
+        <TextView
+            android:id="@+id/txtSemAlertas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Tudo em ordem.&#10;Nenhum produto abaixo do mínimo."
             android:textColor="@color/text_muted"
             android:textSize="14sp"
             android:visibility="gone" />

@@ -11,8 +11,11 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.gesto_stocks.R
+import com.example.gesto_stocks.data.local.StockifyDatabase
 import com.example.gesto_stocks.databinding.FragmentStockBinding
+import com.example.gesto_stocks.ui.alertas.AlertaAdapter
 import com.google.android.material.chip.Chip
+import com.google.android.material.tabs.TabLayout
 
 /**
  * Ecrã de listagem de produtos.
@@ -31,6 +34,11 @@ class StockFragment : Fragment() {
     // O clique numa linha leva ao formulário, enviando o id do produto
     // para que o mesmo ecrã saiba que está em modo de edição
     private val adapter = ProdutoAdapter { produto ->
+        val args = Bundle().apply { putInt("produtoId", produto.id) }
+        findNavController().navigate(R.id.acaoStockParaForm, args)
+    }
+
+    private val adapterAlertas = AlertaAdapter { produto ->
         val args = Bundle().apply { putInt("produtoId", produto.id) }
         findNavController().navigate(R.id.acaoStockParaForm, args)
     }
@@ -83,6 +91,31 @@ class StockFragment : Fragment() {
         binding.fabAdicionar.setOnClickListener {
             findNavController().navigate(R.id.acaoStockParaForm)
         }
+
+        binding.recyclerAlertas.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerAlertas.adapter = adapterAlertas
+
+        val daoAlertas = StockifyDatabase.obter(requireContext()).produtoDao()
+        daoAlertas.listarEmAlerta().observe(viewLifecycleOwner) { lista ->
+            adapterAlertas.submitList(lista)
+
+            binding.txtContadorAlertas.text =
+                if (lista.size == 1) "1 item" else "${lista.size} itens"
+
+            val vazio = lista.isEmpty()
+            binding.txtVazioAlertas.visibility = if (vazio) View.VISIBLE else View.GONE
+            binding.recyclerAlertas.visibility = if (vazio) View.GONE else View.VISIBLE
+        }
+
+        binding.tabsStock.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                val mostrarProdutos = tab.position == 0
+                binding.conteudoProdutos.visibility = if (mostrarProdutos) View.VISIBLE else View.GONE
+                binding.conteudoAlertas.visibility = if (mostrarProdutos) View.GONE else View.VISIBLE
+            }
+            override fun onTabUnselected(tab: TabLayout.Tab) {}
+            override fun onTabReselected(tab: TabLayout.Tab) {}
+        })
     }
 
     /** Mostra as opções de ordenação da lista junto ao botão. */

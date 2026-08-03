@@ -16,12 +16,4 @@
         android:icon="@drawable/ic_inventory1"
         android:title="Inventário" />
 
-    <item
-        android:id="@+id/alertasFragment"
-        android:icon="@drawable/ic_warning"
-        android:title="Reposição" />
-
-
-
-
 </menu>

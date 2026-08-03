@@ -42,96 +42,170 @@
 
         </LinearLayout>
 
-        <EditText
-            android:id="@+id/editPesquisa"
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabsStock"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:hint="Pesquisar produto ou SKU"
             android:background="@color/card"
-            android:padding="12dp"
-            android:textColor="@color/text_primary"
-            android:textColorHint="@color/text_muted"
-            android:inputType="text"
-            android:maxLines="1"
-            android:importantForAutofill="no" />
+            app:tabIndicatorColor="@color/accent"
+            app:tabIndicatorHeight="3dp"
+            app:tabSelectedTextColor="@color/accent"
+            app:tabTextColor="@color/text_muted">
 
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:scrollbars="horizontal"
-            android:scrollbarThumbHorizontal="@color/text_muted">
-
-            <com.google.android.material.chip.ChipGroup
-                android:id="@+id/chipCategorias"
+            <!-- TabItems são vistas virtuais: não podem ter id (o ViewBinding
+                 procurava-as em runtime e rebentava porque já não existem) -->
+            <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:singleLine="true"
-                app:singleSelection="true"
-                app:selectionRequired="true">
+                android:text="Produtos" />
 
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chipTodos"
-                    style="@style/ChipFiltro"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Todos"
-                    android:checked="true" />
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Alertas" />
 
-                <com.google.android.material.chip.Chip
-                    style="@style/ChipFiltro"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Motores" />
+        </com.google.android.material.tabs.TabLayout>
 
-                <com.google.android.material.chip.Chip
-                    style="@style/ChipFiltro"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Sensores" />
-
-                <com.google.android.material.chip.Chip
-                    style="@style/ChipFiltro"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Cabos" />
-
-                <com.google.android.material.chip.Chip
-                    style="@style/ChipFiltro"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Filtros" />
-
-                <com.google.android.material.chip.Chip
-                    style="@style/ChipFiltro"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Válvulas" />
-
-            </com.google.android.material.chip.ChipGroup>
-
-        </HorizontalScrollView>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerProdutos"
+        <!-- Conteúdo do separador Produtos -->
+        <LinearLayout
+            android:id="@+id/conteudoProdutos"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_marginTop="16dp"
-            tools:listitem="@layout/item_produto" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/txtVazio"
+            <EditText
+                android:id="@+id/editPesquisa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="Pesquisar produto ou SKU"
+                android:background="@color/card"
+                android:padding="12dp"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_muted"
+                android:inputType="text"
+                android:maxLines="1"
+                android:importantForAutofill="no" />
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:scrollbars="horizontal"
+                android:scrollbarThumbHorizontal="@color/text_muted">
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chipCategorias"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:singleLine="true"
+                    app:singleSelection="true"
+                    app:selectionRequired="true">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipTodos"
+                        style="@style/ChipFiltro"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Todos"
+                        android:checked="true" />
+
+                    <com.google.android.material.chip.Chip
+                        style="@style/ChipFiltro"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Motores" />
+
+                    <com.google.android.material.chip.Chip
+                        style="@style/ChipFiltro"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sensores" />
+
+                    <com.google.android.material.chip.Chip
+                        style="@style/ChipFiltro"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cabos" />
+
+                    <com.google.android.material.chip.Chip
+                        style="@style/ChipFiltro"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Filtros" />
+
+                    <com.google.android.material.chip.Chip
+                        style="@style/ChipFiltro"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Válvulas" />
+
+                </com.google.android.material.chip.ChipGroup>
+
+            </HorizontalScrollView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerProdutos"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginTop="16dp"
+                tools:listitem="@layout/item_produto" />
+
+            <TextView
+                android:id="@+id/txtVazio"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:text="Nenhum produto encontrado."
+                android:textColor="@color/text_muted"
+                android:textSize="15sp"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+        <!-- Conteúdo do separador Alertas -->
+        <LinearLayout
+            android:id="@+id/conteudoAlertas"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_marginTop="16dp"
-            android:gravity="center"
-            android:text="Nenhum produto encontrado."
-            android:textColor="@color/text_muted"
-            android:textSize="15sp"
-            android:visibility="gone" />
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/txtContadorAlertas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/aviso"
+                android:textSize="13sp"
+                tools:text="3 itens" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerAlertas"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginTop="8dp"
+                tools:listitem="@layout/item_alerta" />
+
+            <TextView
+                android:id="@+id/txtVazioAlertas"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Tudo em ordem.&#10;Nenhum produto abaixo do mínimo."
+                android:textColor="@color/text_muted"
+                android:textSize="15sp"
+                android:visibility="gone" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
