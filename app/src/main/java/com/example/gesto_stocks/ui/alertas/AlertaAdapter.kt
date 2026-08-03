@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.gesto_stocks.R
 import com.example.gesto_stocks.data.model.Produto
 import com.example.gesto_stocks.databinding.ItemAlertaBinding
+import com.example.gesto_stocks.util.mostrarImagemProduto
 
 class AlertaAdapter(
     private val onClick: (Produto) -> Unit
@@ -19,6 +20,7 @@ class AlertaAdapter(
         fun bind(pr: Produto) {
             val ctx = b.root.context
 
+            b.imgProduto.mostrarImagemProduto(pr.imagemPath)
             b.txtNome.text = pr.nome
             b.txtCategoria.text = pr.categoria
             b.txtQuantidade.text = pr.quantidade.toString()

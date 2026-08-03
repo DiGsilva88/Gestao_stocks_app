@@ -36,45 +36,56 @@ abstract class StockifyDatabase : RoomDatabase() {
                     StockifyDatabase::class.java,
                     "stockify.db"
                 )
-                    // Preenche a base de dados na primeira execução. Usa SQL direto
-                    // (não os DAOs do Room) e corre de forma síncrona: onCreate() é
-                    // chamado a partir da própria abertura da BD, antes de qualquer
-                    // query (ex.: o login) poder ser executada — um coroutine lançado
-                    // em segundo plano ou um runBlocking a chamar suspend DAOs no
-                    // executor do Room causaria uma corrida ou um deadlock.
-                    .addCallback(object : Callback() {
-                        override fun onCreate(db: SupportSQLiteDatabase) {
-                            super.onCreate(db)
-
-                            exemplos().forEach { produto ->
-                                db.insert("produtos", SQLiteDatabase.CONFLICT_ABORT, ContentValues().apply {
-                                    put("nome", produto.nome)
-                                    put("sku", produto.sku)
-                                    put("categoria", produto.categoria)
-                                    put("fornecedor", produto.fornecedor)
-                                    put("preco", produto.preco)
-                                    put("quantidade", produto.quantidade)
-                                    put("stockMinimo", produto.stockMinimo)
-                                })
-                            }
-
-                            utilizadoresIniciais().forEach { utilizador ->
-                                db.insert("utilizadores", SQLiteDatabase.CONFLICT_ABORT, ContentValues().apply {
-                                    put("nome", utilizador.nome)
-                                    put("email", utilizador.email)
-                                    put("passwordHash", utilizador.passwordHash)
-                                })
-                            }
-                        }
-                    })
                     // BD local de demonstração: sem migração formal, recria o
                     // schema (perde dados locais) quando a versão muda.
                     .fallbackToDestructiveMigration(true)
                     .build()
+
+                // Preenche a base de dados se estiver vazia. Corre de forma síncrona
+                // com SQL direto (não os DAOs do Room) sobre a ligação já aberta:
+                // garante que os dados existem antes de qualquer query (ex.: o
+                // login) poder ser executada. Não usamos Callback.onCreate porque
+                // só dispara na criação do ficheiro da BD, nunca quando o schema
+                // é recriado por fallbackToDestructiveMigration num ficheiro já
+                // existente — o que deixava a BD sem admin depois de um upgrade.
+                garantirDadosIniciais(db.openHelper.writableDatabase)
+
                 INSTANCIA = db
                 db
             }
         }
+
+        private fun garantirDadosIniciais(db: SupportSQLiteDatabase) {
+            if (contar(db, "produtos") == 0L) {
+                exemplos().forEach { produto ->
+                    db.insert("produtos", SQLiteDatabase.CONFLICT_ABORT, ContentValues().apply {
+                        put("nome", produto.nome)
+                        put("sku", produto.sku)
+                        put("categoria", produto.categoria)
+                        put("fornecedor", produto.fornecedor)
+                        put("preco", produto.preco)
+                        put("quantidade", produto.quantidade)
+                        put("stockMinimo", produto.stockMinimo)
+                    })
+                }
+            }
+
+            if (contar(db, "utilizadores") == 0L) {
+                utilizadoresIniciais().forEach { utilizador ->
+                    db.insert("utilizadores", SQLiteDatabase.CONFLICT_ABORT, ContentValues().apply {
+                        put("nome", utilizador.nome)
+                        put("email", utilizador.email)
+                        put("passwordHash", utilizador.passwordHash)
+                    })
+                }
+            }
+        }
+
+        private fun contar(db: SupportSQLiteDatabase, tabela: String): Long =
+            db.query("SELECT COUNT(*) FROM $tabela").use {
+                it.moveToFirst()
+                it.getLong(0)
+            }
 
         // Produtos de demonstração: incluem os três estados possíveis
         // (esgotado, abaixo do mínimo e normal)
