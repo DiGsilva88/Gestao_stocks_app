@@ -11,7 +11,8 @@ import com.example.gesto_stocks.databinding.ItemAlertaBinding
 import com.example.gesto_stocks.util.mostrarImagemProduto
 
 class AlertaAdapter(
-    private val onClick: (Produto) -> Unit
+    private val onClick: (Produto) -> Unit,
+    private val onMovimento: (Produto) -> Unit
 ) : ListAdapter<Produto, AlertaAdapter.AlertaVH>(DIFF) {
 
     inner class AlertaVH(private val b: ItemAlertaBinding) :
@@ -44,6 +45,10 @@ class AlertaAdapter(
             b.barraNivel.progress = percentagem
 
             b.root.setOnClickListener { onClick(pr) }
+            b.root.setOnLongClickListener {
+                onMovimento(pr)
+                true
+            }
         }
     }
 
