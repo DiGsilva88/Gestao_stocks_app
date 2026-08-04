@@ -16,6 +16,7 @@ import com.example.gesto_stocks.databinding.FragmentInicioBinding
 import com.example.gesto_stocks.databinding.ItemLegendaBinding
 import com.example.gesto_stocks.databinding.ItemTopProdutoBinding
 import com.example.gesto_stocks.ui.alertas.AlertaAdapter
+import com.example.gesto_stocks.ui.stocks.MovimentoDialogo
 import com.example.gesto_stocks.util.Sessao
 import kotlinx.coroutines.launch
 import java.text.NumberFormat
@@ -29,10 +30,15 @@ class InicioFragment : Fragment() {
 
     private val viewModel: InicioViewModel by viewModels()
 
-    private val adapterAlertas = AlertaAdapter { produto ->
-        val args = Bundle().apply { putInt("produtoId", produto.id) }
-        findNavController().navigate(R.id.produtoFormFragment, args)
-    }
+    private val adapterAlertas = AlertaAdapter(
+        onClick = { produto ->
+            val args = Bundle().apply { putInt("produtoId", produto.id) }
+            findNavController().navigate(R.id.produtoFormFragment, args)
+        },
+        onMovimento = { produto ->
+            MovimentoDialogo(requireContext(), produto) {}.mostrar()
+        }
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -16,6 +16,7 @@ import com.example.gesto_stocks.databinding.FragmentStockBinding
 import com.example.gesto_stocks.ui.alertas.AlertaAdapter
 import com.google.android.material.chip.Chip
 import com.google.android.material.tabs.TabLayout
+import com.example.gesto_stocks.ui.stocks.MovimentoDialogo
 
 /**
  * Ecrã de listagem de produtos.
@@ -33,15 +34,26 @@ class StockFragment : Fragment() {
 
     // O clique numa linha leva ao formulário, enviando o id do produto
     // para que o mesmo ecrã saiba que está em modo de edição
-    private val adapter = ProdutoAdapter { produto ->
-        val args = Bundle().apply { putInt("produtoId", produto.id) }
-        findNavController().navigate(R.id.acaoStockParaForm, args)
-    }
-
-    private val adapterAlertas = AlertaAdapter { produto ->
-        val args = Bundle().apply { putInt("produtoId", produto.id) }
-        findNavController().navigate(R.id.acaoStockParaForm, args)
-    }
+    private val adapter = ProdutoAdapter(
+        onClick = { produto ->
+            val args = Bundle().apply { putInt("produtoId", produto.id) }
+            findNavController().navigate(R.id.acaoStockParaForm, args)
+        },
+        onMovimento = { produto ->
+            MovimentoDialogo(requireContext(), produto) {
+                // O LiveData atualiza sozinho, não precisa de ação extra
+            }.mostrar()
+        }
+    )
+    private val adapterAlertas = AlertaAdapter(
+        onClick = { produto ->
+            val args = Bundle().apply { putInt("produtoId", produto.id) }
+            findNavController().navigate(R.id.acaoStockParaForm, args)
+        },
+        onMovimento = { produto ->
+            MovimentoDialogo(requireContext(), produto) {}.mostrar()
+        }
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -18,9 +18,10 @@ import java.util.Locale
 // * Adapter da lista de produtos.
 // * Preenche cada linha com os dados de um produto e calcula o estado do stock.
 // */
-    class ProdutoAdapter(
-        private val onClick: (Produto) -> Unit
-    ) : ListAdapter<Produto, ProdutoAdapter.ProdutoVH>(DIFF) {
+class ProdutoAdapter(
+    private val onClick: (Produto) -> Unit,
+    private val onMovimento: (Produto) -> Unit
+) : ListAdapter<Produto, ProdutoAdapter.ProdutoVH>(DIFF) {
 
         // Formata valores em euros com o separador decimal português
         private val moeda: NumberFormat =
@@ -30,35 +31,38 @@ import java.util.Locale
 
         fun bind(p: Produto) {
             val ctx = b.root.context
-            b.imgProduto.mostrarImagemProduto(p.imagemPath)
-            b.txtNome.text = p.nome
-            b.txtSku.text = "${p.sku} · ${p.categoria}"
-            b.txtQuantidade.text = p.quantidade.toString()
-            b.txtPreco.text = moeda.format(p.preco)
 
-            // O estado não é guardado na base de dados:
-            // é calculado a partir da quantidade e do stock mínimo
+            b.txtNome.text = p.nome
+            b.txtSku.text = "${p.sku} · ${p.categoria} · ${moeda.format(p.preco)}"
+            b.txtQuantidade.text = p.quantidade.toString()
 
             when {
                 p.quantidade == 0 -> {
                     b.txtEstado.text = "Esgotado"
                     b.txtEstado.setTextColor(ctx.getColor(R.color.critico))
+                    b.txtQuantidade.setTextColor(ctx.getColor(R.color.critico))
                 }
                 p.quantidade < p.stockMinimo -> {
                     b.txtEstado.text = "Baixo"
                     b.txtEstado.setTextColor(ctx.getColor(R.color.aviso))
+                    b.txtQuantidade.setTextColor(ctx.getColor(R.color.aviso))
                 }
                 else -> {
                     b.txtEstado.text = "OK"
                     b.txtEstado.setTextColor(ctx.getColor(R.color.accent))
+                    b.txtQuantidade.setTextColor(ctx.getColor(R.color.accent))
                 }
             }
 
             b.root.setOnClickListener { onClick(p) }
+            b.root.setOnLongClickListener {
+                onMovimento(p)
+                true
+            }
             b.btnEditar.setOnClickListener { onClick(p) }
+            b.btnMovimento.setOnClickListener { onMovimento(p) }
         }
     }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         ProdutoVH(ItemProdutoBinding.inflate(
             LayoutInflater.from(parent.context), parent, false))

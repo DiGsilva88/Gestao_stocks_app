@@ -10,19 +10,23 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.gesto_stocks.data.model.Produto
 import com.example.gesto_stocks.data.model.Utilizador
 import com.example.gesto_stocks.util.hashPassword
+import com.example.gesto_stocks.data.model.Movimento
+
 
 /**
  * Base de dados local da aplicação.
  * Contém duas tabelas: produtos e utilizadores.
  */
 @Database(
-    entities = [Produto::class, Utilizador::class],
-    version = 3
+    entities = [Produto::class, Utilizador::class, Movimento::class],
+    version = 2
 )
 abstract class StockifyDatabase : RoomDatabase() {
 
     abstract fun produtoDao(): ProdutoDao
     abstract fun utilizadorDao(): UtilizadorDao
+
+    abstract fun movimentoDao(): MovimentoDao
 
     companion object {
         // Instância única: evita abrir várias ligações à mesma base de dados
