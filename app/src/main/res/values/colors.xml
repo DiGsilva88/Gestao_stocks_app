@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="accent">#7DE0B0</color>
-    <color name="background">#1D1B20</color>
-    <color name="card">#20241F</color>
-    <color name="text_primary">#F3F5F2</color>
-    <color name="text_muted">#8D9791</color>
-    <color name="contrast">#152018</color>
-    <color name="critico">#F0937A</color>
-    <color name="aviso">#F0A34A</color>
+    <!-- Tema principal — azul -->
+    <color name="accent">#3D6BF4</color>
+    <color name="background">#F5F7FA</color>
+    <color name="card">#FFFFFF</color>
+    <color name="text_primary">#1A1C1E</color>
+    <color name="text_muted">#6B7280</color>
+    <color name="contrast">#FFFFFF</color>
+
+    <!-- Estados -->
+    <color name="critico">#DC2626</color>
+    <color name="aviso">#F59E0B</color>
+
+    <!-- Ecrã de entrada -->
+    <color name="splash_fundo">#3D6BF4</color>
+    <color name="splash_texto">#FFFFFF</color>
+    <color name="splash_suave">#5B84F7</color>
 </resources>

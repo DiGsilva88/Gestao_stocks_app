@@ -9,7 +9,7 @@
     <item name="android:colorBackground">@color/background</item>
     <item name="colorSurface">@color/card</item>
     <item name="android:statusBarColor">@color/background</item>
-    <item name="android:windowLightStatusBar">false</item>
+    <item name="android:windowLightStatusBar">true</item>
     </style>
 
     <style name="ChipFiltro" parent="Widget.Material3.Chip.Filter">

@@ -1,59 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:background="@color/background">
+    android:background="@color/splash_fundo">
 
+    <!-- Formas decorativas nos cantos -->
+    <View
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:layout_gravity="top|start"
+        android:layout_marginTop="-60dp"
+        android:layout_marginStart="-60dp"
+        android:background="@drawable/bg_hexagono"
+        android:rotation="20"
+        android:alpha="0.5" />
 
-    <ImageView
-        android:layout_width="88dp"
-        android:layout_height="88dp"
-        android:src="@drawable/ic_inventory1"
-        android:contentDescription="Logótipo Stockify"
-        app:tint="@color/accent" />
+    <View
+        android:layout_width="220dp"
+        android:layout_height="220dp"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="-80dp"
+        android:layout_marginEnd="-70dp"
+        android:background="@drawable/bg_hexagono"
+        android:rotation="35"
+        android:alpha="0.5" />
 
-
-    <TextView
-        android:layout_width="wrap_content"
+    <!-- Conteúdo central -->
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Stockify"
-        android:textColor="@color/text_primary"
-        android:textSize="40sp" />
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:gravity="center">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:text="Gestão de armazém"
-        android:textColor="@color/text_muted"
-        android:textSize="18sp" />
+        <ImageView
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:src="@drawable/ic_inventory"
+            android:contentDescription="Logótipo"
+            app:tint="@color/splash_texto" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:letterSpacing="0.15"
+            android:text="STOCKIFY"
+            android:textColor="@color/splash_texto"
+            android:textSize="32sp"
+            android:textStyle="bold" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Controla o teu stock em tempo real"
-        android:textColor="@color/text_muted"
-        android:textSize="15sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:alpha="0.8"
+            android:text="Gestão de armazém"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/splash_texto"
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
+    </LinearLayout>
+
+    <!-- Botão em baixo -->
     <Button
         android:id="@+id/btnEntrarSplash"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:paddingHorizontal="28dp"
-        android:text="Entrar →"
-        android:backgroundTint="@color/accent"
-        android:textColor="@color/contrast" />
+        android:layout_gravity="bottom"
+        android:layout_margin="28dp"
+        android:text="Começar"
+        android:backgroundTint="@color/splash_texto"
+        android:textColor="@color/splash_fundo"
+        android:textStyle="bold" />
 
-
-
-
-
-
-</LinearLayout>
+</FrameLayout>

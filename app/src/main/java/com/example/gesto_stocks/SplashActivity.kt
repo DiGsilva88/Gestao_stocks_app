@@ -10,6 +10,7 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.statusBarColor = getColor(R.color.splash_fundo)
 
         if (Sessao(this).temSessao()) {
             startActivity(Intent(this, MainActivity::class.java))
