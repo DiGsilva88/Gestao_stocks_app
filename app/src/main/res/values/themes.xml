@@ -42,7 +42,7 @@
         <item name="android:letterSpacing">0.05</item>
     </style>
 
-    <style name="CampoTexto">
+    <style name="CampoTextoBase">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@drawable/bg_campo</item>
@@ -50,10 +50,11 @@
         <item name="android:padding">14dp</item>
         <item name="android:textColor">@color/text_primary</item>
         <item name="android:maxLines">1</item>
-        <item name="android:importantForAutofill">no</item>
     </style>
 
-    <style name="RotuloCampoStyle" parent="RotuloCampo" />
+    <!-- O importantForAutofill fica na variante values-v26: o atributo só
+         existe a partir da API 26 e o minSdk é 24. -->
+    <style name="CampoTexto" parent="CampoTextoBase" />
 
     <style name="Theme.Gestão_stocks" parent="Base.Theme.Gestão_stocks" />
 </resources>

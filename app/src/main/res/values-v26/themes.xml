@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- android:importantForAutofill foi introduzido na API 26. Declarado num
+         style dentro de values/ apontaria para um id que não existe em API 24-25,
+         onde pode colidir com atributos próprios de alguns fabricantes. -->
+    <style name="CampoTexto" parent="CampoTextoBase">
+        <item name="android:importantForAutofill">no</item>
+    </style>
+
+</resources>
