@@ -8,15 +8,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import android.graphics.drawable.GradientDrawable
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.gesto_stocks.R
 import com.example.gesto_stocks.data.local.StockifyDatabase
 import com.example.gesto_stocks.databinding.FragmentInicioBinding
 import com.example.gesto_stocks.databinding.ItemLegendaBinding
 import com.example.gesto_stocks.databinding.ItemTopProdutoBinding
-import com.example.gesto_stocks.ui.alertas.AlertaAdapter
-import com.example.gesto_stocks.ui.stocks.MovimentoDialogo
+import com.example.gesto_stocks.ui.stocks.MovimentoAdapter
 import com.example.gesto_stocks.util.Sessao
 import kotlinx.coroutines.launch
 import java.text.NumberFormat
@@ -29,16 +27,6 @@ class InicioFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: InicioViewModel by viewModels()
-
-    private val adapterAlertas = AlertaAdapter(
-        onClick = { produto ->
-            val args = Bundle().apply { putInt("produtoId", produto.id) }
-            findNavController().navigate(R.id.produtoFormFragment, args)
-        },
-        onMovimento = { produto ->
-            MovimentoDialogo(requireContext(), produto) {}.mostrar()
-        }
-    )
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -55,9 +43,6 @@ class InicioFragment : Fragment() {
         carregarUtilizador()
 
         val moeda = NumberFormat.getCurrencyInstance(Locale("pt", "PT"))
-
-        binding.recyclerAlertas.layoutManager = LinearLayoutManager(requireContext())
-        binding.recyclerAlertas.adapter = adapterAlertas
 
         viewModel.produtos.observe(viewLifecycleOwner) {
             binding.txtVazio.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
@@ -86,16 +71,21 @@ class InicioFragment : Fragment() {
             binding.txtLucroTotal.text = moeda.format(it)
         }
 
-        viewModel.produtosEmAlerta.observe(viewLifecycleOwner) { lista ->
-            adapterAlertas.submitList(lista)
-            binding.recyclerAlertas.visibility = if (lista.isEmpty()) View.GONE else View.VISIBLE
-            binding.txtSemAlertas.visibility = if (lista.isEmpty()) View.VISIBLE else View.GONE
-        }
-
         val cores = listOf(
             R.color.accent, R.color.aviso, R.color.critico,
             R.color.text_muted, R.color.text_primary
         ).map { requireContext().getColor(it) }
+
+        val movimentoAdapter = MovimentoAdapter()
+        binding.recyclerMovimentos.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerMovimentos.adapter = movimentoAdapter
+
+        viewModel.movimentosRecentes.observe(viewLifecycleOwner) { lista ->
+            val temMovimentos = lista.isNotEmpty()
+            binding.txtTituloMovimentos.visibility = if (temMovimentos) View.VISIBLE else View.GONE
+            binding.recyclerMovimentos.visibility = if (temMovimentos) View.VISIBLE else View.GONE
+            movimentoAdapter.submitList(lista)
+        }
 
         viewModel.vendasPorCategoria.observe(viewLifecycleOwner) { lista ->
             binding.cartaoCategorias.visibility = if (lista.isEmpty()) View.GONE else View.VISIBLE
