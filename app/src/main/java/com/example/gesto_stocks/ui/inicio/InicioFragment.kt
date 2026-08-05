@@ -71,6 +71,11 @@ class InicioFragment : Fragment() {
             binding.txtEmAlerta.text = it.toString()
             binding.txtBadge.text = it.toString()
             binding.txtBadge.visibility = if (it == 0) View.GONE else View.VISIBLE
+            binding.blocoNotificacoes.contentDescription = when (it) {
+                0 -> "Sem alertas de stock"
+                1 -> "1 alerta de stock"
+                else -> "$it alertas de stock"
+            }
         }
 
         viewModel.receitaTotal.observe(viewLifecycleOwner) {

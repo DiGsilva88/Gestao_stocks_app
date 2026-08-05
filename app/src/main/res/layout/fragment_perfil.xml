@@ -193,7 +193,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="28dp"
             android:text="Terminar sessão"
-            android:backgroundTint="#FEE2E2"
+            android:backgroundTint="@color/critico_fundo"
             android:textColor="@color/critico" />
 
     </LinearLayout>

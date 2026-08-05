@@ -48,7 +48,7 @@
             android:layout_marginTop="20dp"
             android:fontFamily="sans-serif-condensed-medium"
             android:letterSpacing="0.15"
-            android:text="STOCKIFY"
+            android:text="Stockify"
             android:textColor="@color/splash_texto"
             android:textSize="32sp"
             android:textStyle="bold" />

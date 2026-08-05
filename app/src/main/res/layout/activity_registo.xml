@@ -26,7 +26,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Nome"
-            android:background="@color/card"
+            android:background="@drawable/bg_campo"
+            android:minHeight="48dp"
             android:padding="14dp"
             android:textColor="@color/text_primary"
             android:textColorHint="@color/text_muted"
@@ -40,7 +41,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:hint="Email"
-            android:background="@color/card"
+            android:background="@drawable/bg_campo"
+            android:minHeight="48dp"
             android:padding="14dp"
             android:textColor="@color/text_primary"
             android:textColorHint="@color/text_muted"
@@ -54,7 +56,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:hint="Password"
-            android:background="@color/card"
+            android:background="@drawable/bg_campo"
+            android:minHeight="48dp"
             android:padding="14dp"
             android:textColor="@color/text_primary"
             android:textColorHint="@color/text_muted"
@@ -68,7 +71,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:hint="Confirmar password"
-            android:background="@color/card"
+            android:background="@drawable/bg_campo"
+            android:minHeight="48dp"
             android:padding="14dp"
             android:textColor="@color/text_primary"
             android:textColorHint="@color/text_muted"
@@ -85,15 +89,14 @@
             android:backgroundTint="@color/accent"
             android:textColor="@color/contrast" />
 
-        <TextView
+        <Button
             android:id="@+id/txtIrLogin"
+            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="18dp"
-            android:padding="8dp"
-            android:text="Já tenho conta"
-            android:textColor="@color/text_muted" />
+            android:text="Já tenho conta" />
 
     </LinearLayout>
 

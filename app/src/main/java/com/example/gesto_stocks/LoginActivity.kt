@@ -2,7 +2,7 @@ package com.example.gesto_stocks
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.gesto_stocks.data.local.StockifyDatabase
@@ -28,7 +28,8 @@ class LoginActivity : AppCompatActivity() {
             val password = binding.editPassword.text.toString()
 
             if (email.isEmpty() || password.isEmpty()) {
-                aviso("Preenche os dois campos")
+                val campo = if (email.isEmpty()) binding.editEmail else binding.editPassword
+                erro(campo, "Preenche este campo")
                 return@setOnClickListener
             }
 
@@ -37,7 +38,7 @@ class LoginActivity : AppCompatActivity() {
 
                 if (utilizador == null ||
                     utilizador.passwordHash != hashPassword(password)) {
-                    aviso("Email ou password incorretos")
+                    erro(binding.editPassword, "Email ou password incorretos")
                     return@launch
                 }
 
@@ -52,7 +53,12 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun aviso(texto: String) {
-        Toast.makeText(this, texto, Toast.LENGTH_SHORT).show()
+    /**
+     * Marca o erro no próprio campo em vez de um Toast: fica visível enquanto
+     * o utilizador corrige e o leitor de ecrã anuncia-o ao focar o campo.
+     */
+    private fun erro(campo: EditText, texto: String) {
+        campo.error = texto
+        campo.requestFocus()
     }
 }

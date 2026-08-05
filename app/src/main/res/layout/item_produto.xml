@@ -90,35 +90,16 @@
 
     </LinearLayout>
 
-    <!-- Botões -->
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <!-- Editar não tem botão próprio: o clique na linha já abre o formulário -->
+    <ImageButton
+        android:id="@+id/btnMovimento"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_marginStart="8dp"
-        android:orientation="vertical"
-        android:gravity="center">
-
-        <ImageView
-            android:id="@+id/btnEditar"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@drawable/bg_icone"
-            android:padding="6dp"
-            android:src="@drawable/ic_edit"
-            android:contentDescription="Editar produto"
-            app:tint="@color/accent" />
-
-        <ImageView
-            android:id="@+id/btnMovimento"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="6dp"
-            android:background="@drawable/bg_icone"
-            android:padding="6dp"
-            android:src="@drawable/ic_movimento"
-            android:contentDescription="Registar movimento"
-            app:tint="@color/accent" />
-
-    </LinearLayout>
+        android:background="@drawable/bg_icone"
+        android:padding="12dp"
+        android:src="@drawable/ic_movimento"
+        android:contentDescription="Registar movimento"
+        app:tint="@color/accent" />
 
 </LinearLayout>

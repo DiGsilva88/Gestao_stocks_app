@@ -30,8 +30,8 @@
 
             <ImageButton
                 android:id="@+id/btnFechar"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:background="@drawable/bg_campo"
                 android:src="@android:drawable/ic_menu_close_clear_cancel"
                 android:contentDescription="Fechar"
@@ -41,6 +41,7 @@
 
         <TextView
             style="@style/RotuloCampo"
+            android:labelFor="@id/editNome"
             android:text="NOME" />
 
         <EditText
@@ -50,6 +51,7 @@
 
         <TextView
             style="@style/RotuloCampo"
+            android:labelFor="@id/editEmail"
             android:text="UTILIZADOR" />
 
         <EditText
@@ -77,6 +79,7 @@
 
         <TextView
             style="@style/RotuloCampo"
+            android:labelFor="@id/editPasswordAtual"
             android:text="PASSWORD ATUAL" />
 
         <EditText
@@ -86,6 +89,7 @@
 
         <TextView
             style="@style/RotuloCampo"
+            android:labelFor="@id/editPasswordNova"
             android:text="NOVA PASSWORD" />
 
         <EditText
@@ -95,6 +99,7 @@
 
         <TextView
             style="@style/RotuloCampo"
+            android:labelFor="@id/editPasswordConfirmar"
             android:text="CONFIRMAR NOVA PASSWORD" />
 
         <EditText

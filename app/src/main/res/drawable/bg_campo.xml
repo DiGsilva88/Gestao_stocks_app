@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle">
-    <solid android:color="@color/card" />
-    <corners android:radius="12dp" />
-</shape>
+<!-- Fundo dos campos e cartões. O estado com foco desenha um contorno visível,
+     sem ele os EditText com fundo liso não mostram onde está o cursor. -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_focused="true">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/card" />
+            <corners android:radius="12dp" />
+            <stroke android:width="2dp" android:color="@color/accent" />
+        </shape>
+    </item>
+
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/card" />
+            <corners android:radius="12dp" />
+        </shape>
+    </item>
+
+</selector>

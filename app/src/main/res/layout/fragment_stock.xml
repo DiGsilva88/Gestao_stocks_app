@@ -30,14 +30,14 @@
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/btnOrdenar"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:background="@drawable/bg_icone"
-                android:padding="10dp"
+                android:padding="12dp"
                 android:src="@drawable/ic_ordenar"
-                android:contentDescription="Ordenar"
+                android:contentDescription="Ordenar lista"
                 app:tint="@color/accent" />
 
         </LinearLayout>
@@ -81,7 +81,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:hint="Pesquisar produto ou SKU"
-                android:background="@color/card"
+                android:background="@drawable/bg_campo"
+                android:minHeight="48dp"
                 android:padding="12dp"
                 android:textColor="@color/text_primary"
                 android:textColorHint="@color/text_muted"

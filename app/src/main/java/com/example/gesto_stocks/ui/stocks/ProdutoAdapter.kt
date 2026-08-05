@@ -59,7 +59,6 @@ class ProdutoAdapter(
                 onMovimento(p)
                 true
             }
-            b.btnEditar.setOnClickListener { onClick(p) }
             b.btnMovimento.setOnClickListener { onMovimento(p) }
         }
     }

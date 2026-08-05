@@ -2,7 +2,7 @@ package com.example.gesto_stocks
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.gesto_stocks.data.local.StockifyDatabase
@@ -33,7 +33,7 @@ class RegistoActivity : AppCompatActivity() {
 
             lifecycleScope.launch {
                 if (dao.buscarPorEmail(email) != null) {
-                    aviso("Já existe uma conta com este email")
+                    erro(binding.editEmail, "Já existe uma conta com este email")
                     return@launch
                 }
 
@@ -60,26 +60,26 @@ class RegistoActivity : AppCompatActivity() {
         val password = binding.editPassword.text.toString()
         val confirmar = binding.editConfirmar.text.toString()
 
-        if (nome.isEmpty() || email.isEmpty() || password.isEmpty()) {
-            aviso("Preenche todos os campos")
-            return false
-        }
+        // Cada erro é marcado no campo que o causou, para que o utilizador
+        // (e o leitor de ecrã) saiba exatamente o que corrigir
+        if (nome.isEmpty()) return erro(binding.editNome, "Indica o teu nome")
+        if (email.isEmpty()) return erro(binding.editEmail, "Indica o teu email")
         if (!email.contains("@") || !email.contains(".")) {
-            aviso("Email inválido")
-            return false
+            return erro(binding.editEmail, "Email inválido")
         }
         if (password.length < 6) {
-            aviso("A password precisa de pelo menos 6 caracteres")
-            return false
+            return erro(binding.editPassword, "Precisa de pelo menos 6 caracteres")
         }
         if (password != confirmar) {
-            aviso("As passwords não coincidem")
-            return false
+            return erro(binding.editConfirmar, "As passwords não coincidem")
         }
         return true
     }
 
-    private fun aviso(texto: String) {
-        Toast.makeText(this, texto, Toast.LENGTH_SHORT).show()
+    /** Marca o erro no campo e devolve false para travar a validação. */
+    private fun erro(campo: EditText, texto: String): Boolean {
+        campo.error = texto
+        campo.requestFocus()
+        return false
     }
 }
