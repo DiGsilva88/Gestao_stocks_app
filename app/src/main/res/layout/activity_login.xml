@@ -23,7 +23,8 @@
         android:layout_height="wrap_content"
         android:hint="Utilizador"
         android:inputType="text"
-        android:background="@color/card"
+        android:background="@drawable/bg_campo"
+        android:minHeight="48dp"
         android:padding="14dp"
         android:textColor="@color/text_primary"
         android:textColorHint="@color/text_muted"
@@ -36,7 +37,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:hint="Password"
-        android:background="@color/card"
+        android:background="@drawable/bg_campo"
+        android:minHeight="48dp"
         android:padding="14dp"
         android:textColor="@color/text_primary"
         android:textColorHint="@color/text_muted"
@@ -51,17 +53,19 @@
         android:layout_marginTop="32dp"
         android:paddingHorizontal="28dp"
         android:text="Entrar →"
+        android:contentDescription="Entrar"
         android:backgroundTint="@color/accent"
         android:textColor="@color/contrast" />
 
-    <TextView
+    <!-- Button em vez de TextView: dá o papel de botão ao leitor de ecrã
+         e a altura mínima de 48dp para o toque -->
+    <Button
         android:id="@+id/txtIrRegisto"
+        style="@style/Widget.Material3.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="18dp"
-        android:padding="8dp"
-        android:text="Ainda não tenho conta"
-        android:textColor="@color/text_muted" />
+        android:text="Ainda não tenho conta" />
 
 </LinearLayout>

@@ -33,8 +33,8 @@
 
             <ImageButton
                 android:id="@+id/btnFechar"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:background="@drawable/bg_campo"
                 android:src="@android:drawable/ic_menu_close_clear_cancel"
                 android:contentDescription="Fechar"
@@ -72,6 +72,7 @@
         <!-- Nome -->
         <TextView
             style="@style/RotuloCampo"
+            android:labelFor="@id/editNome"
             android:text="NOME DO PRODUTO" />
 
         <EditText
@@ -94,6 +95,7 @@
 
                 <TextView
                     style="@style/RotuloCampo"
+                    android:labelFor="@id/editSku"
                     android:text="SKU" />
 
                 <EditText
@@ -112,6 +114,7 @@
 
                 <TextView
                     style="@style/RotuloCampo"
+                    android:labelFor="@id/editPreco"
                     android:text="PREÇO VENDA (€)" />
 
                 <EditText
@@ -125,6 +128,7 @@
 
         <TextView
             style="@style/RotuloCampo"
+            android:labelFor="@id/editPrecoCusto"
             android:text="PREÇO DE CUSTO (€)" />
 
         <EditText
@@ -190,6 +194,7 @@
         <!-- Fornecedor -->
         <TextView
             style="@style/RotuloCampo"
+            android:labelFor="@id/editFornecedor"
             android:text="FORNECEDOR" />
 
         <EditText
@@ -200,6 +205,7 @@
         <!-- Stock mínimo -->
         <TextView
             style="@style/RotuloCampo"
+            android:labelFor="@id/editStockMinimo"
             android:text="STOCK MÍNIMO" />
 
         <EditText
@@ -210,6 +216,7 @@
         <!-- Quantidade -->
         <TextView
             style="@style/RotuloCampo"
+            android:labelFor="@id/editQuantidade"
             android:text="QUANTIDADE EM STOCK" />
 
         <EditText
@@ -232,7 +239,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:text="Eliminar"
-            android:backgroundTint="#FEE2E2"
+            android:backgroundTint="@color/critico_fundo"
             android:textColor="@color/critico"
             android:visibility="gone" />
 

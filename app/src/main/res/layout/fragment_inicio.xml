@@ -59,18 +59,20 @@
 
             </LinearLayout>
 
+            <!-- Ícone e badge formam um único nó para o leitor de ecrã: a
+                 descrição completa ("3 alertas de stock") é posta no bloco -->
             <FrameLayout
                 android:id="@+id/blocoNotificacoes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:layout_width="42dp"
-                    android:layout_height="42dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:background="@drawable/bg_icone"
-                    android:padding="10dp"
+                    android:padding="12dp"
                     android:src="@drawable/ic_warning"
-                    android:contentDescription="Alertas"
+                    android:importantForAccessibility="no"
                     app:tint="@color/accent" />
 
                 <TextView
@@ -80,7 +82,8 @@
                     android:layout_gravity="top|end"
                     android:background="@drawable/bg_badge"
                     android:gravity="center"
-                    android:textColor="@color/text_primary"
+                    android:importantForAccessibility="no"
+                    android:textColor="@color/contrast"
                     android:textSize="10sp"
                     android:textStyle="bold"
                     tools:text="3" />
@@ -320,10 +323,12 @@
                 android:orientation="horizontal"
                 android:gravity="center_vertical">
 
+                <!-- A legenda ao lado já dá os mesmos dados em texto -->
                 <com.example.gesto_stocks.ui.inicio.GraficoDonut
                     android:id="@+id/graficoDonut"
                     android:layout_width="110dp"
-                    android:layout_height="110dp" />
+                    android:layout_height="110dp"
+                    android:importantForAccessibility="no" />
 
                 <LinearLayout
                     android:id="@+id/legendaCategorias"
