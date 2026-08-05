@@ -55,7 +55,6 @@
     <string name="inicio_vazio">Ainda não há produtos.\nToca no separador Stock para adicionar.</string>
     <string name="inicio_vendas_categoria">Vendas por Categoria</string>
     <string name="inicio_top_produtos">Top Produtos por Receita</string>
-    <string name="inicio_alertas_baixo">Alertas de Stock Baixo</string>
     <string name="sem_alertas">Tudo em ordem.\nNenhum produto abaixo do mínimo.</string>
     <string name="saudacao_bom_dia">Bom dia</string>
     <string name="saudacao_boa_tarde">Boa tarde</string>
@@ -146,6 +145,11 @@
     <string name="perfil_password_atualizados">Perfil e password atualizados</string>
 
     <!-- Movimento de stock -->
+    <string name="inicio_ultimos_movimentos">Últimos movimentos</string>
+    <string name="movimento_qtd_entrada">+%d</string>
+    <string name="movimento_qtd_saida">-%d</string>
+    <string name="desc_movimento_entrada">Entrada de %d</string>
+    <string name="desc_movimento_saida">Saída de %d</string>
     <string name="movimento_titulo">Movimento de Stock</string>
     <string name="movimento_entrada">Entrada</string>
     <string name="movimento_saida">Saída</string>

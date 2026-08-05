@@ -13,8 +13,6 @@ class InicioViewModel(app: Application) : AndroidViewModel(app) {
 
     val produtos: LiveData<List<Produto>> = dao.listarTodos()
 
-    val produtosEmAlerta: LiveData<List<Produto>> = dao.listarEmAlerta()
-
     val stockTotal: LiveData<Int> = produtos.map { lista ->
         lista.sumOf { it.quantidade }
     }
@@ -42,4 +40,8 @@ class InicioViewModel(app: Application) : AndroidViewModel(app) {
     val topProdutos: LiveData<List<Produto>> = produtos.map { lista ->
         lista.sortedByDescending { it.preco * it.quantidade }.take(3)
     }
+
+    private val movDao = StockifyDatabase.obter(app).movimentoDao()
+
+    val movimentosRecentes = movDao.listarRecentes(10)
 }

@@ -298,6 +298,26 @@
             android:textSize="14sp"
             android:visibility="gone" />
 
+        <!-- Últimos movimentos -->
+        <TextView
+            android:id="@+id/txtTituloMovimentos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="12dp"
+            android:text="@string/inicio_ultimos_movimentos"
+            android:textColor="@color/text_primary"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerMovimentos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
+            android:visibility="gone" />
+
         <!-- Vendas por categoria -->
         <LinearLayout
             android:id="@+id/cartaoCategorias"
@@ -360,34 +380,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" />
 
-        <!-- Alertas de stock baixo -->
-        <TextView
-            android:id="@+id/txtTituloAlertas"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="12dp"
-            android:text="@string/inicio_alertas_baixo"
-            android:textColor="@color/text_primary"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerAlertas"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:nestedScrollingEnabled="false"
-            tools:listitem="@layout/item_alerta" />
-
-        <TextView
-            android:id="@+id/txtSemAlertas"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/sem_alertas"
-            android:textColor="@color/text_muted"
-            android:textSize="14sp"
-            android:visibility="gone" />
+        <!-- A lista de alertas vive no separador Alertas do ecrã Stock.
+             Aqui fica só o contador, em cima. -->
 
     </LinearLayout>
 
