@@ -23,7 +23,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Editar Perfil"
+                android:text="@string/editar_perfil_titulo"
                 android:textColor="@color/text_primary"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -34,7 +34,7 @@
                 android:layout_height="48dp"
                 android:background="@drawable/bg_campo"
                 android:src="@android:drawable/ic_menu_close_clear_cancel"
-                android:contentDescription="Fechar"
+                android:contentDescription="@string/fechar"
                 app:tint="@color/text_primary" />
 
         </LinearLayout>
@@ -42,7 +42,7 @@
         <TextView
             style="@style/RotuloCampo"
             android:labelFor="@id/editNome"
-            android:text="NOME" />
+            android:text="@string/editar_nome" />
 
         <EditText
             android:id="@+id/editNome"
@@ -52,7 +52,7 @@
         <TextView
             style="@style/RotuloCampo"
             android:labelFor="@id/editEmail"
-            android:text="UTILIZADOR" />
+            android:text="@string/editar_utilizador" />
 
         <EditText
             android:id="@+id/editEmail"
@@ -65,7 +65,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="28dp"
-            android:text="Alterar password"
+            android:text="@string/editar_alterar_password"
             android:textColor="@color/text_primary"
             android:textSize="16sp" />
 
@@ -73,14 +73,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="Deixa os campos em branco para manter a password atual."
+            android:text="@string/editar_password_opcional"
             android:textColor="@color/text_muted"
             android:textSize="12sp" />
 
         <TextView
             style="@style/RotuloCampo"
             android:labelFor="@id/editPasswordAtual"
-            android:text="PASSWORD ATUAL" />
+            android:text="@string/editar_password_atual" />
 
         <EditText
             android:id="@+id/editPasswordAtual"
@@ -90,7 +90,7 @@
         <TextView
             style="@style/RotuloCampo"
             android:labelFor="@id/editPasswordNova"
-            android:text="NOVA PASSWORD" />
+            android:text="@string/editar_password_nova" />
 
         <EditText
             android:id="@+id/editPasswordNova"
@@ -100,7 +100,7 @@
         <TextView
             style="@style/RotuloCampo"
             android:labelFor="@id/editPasswordConfirmar"
-            android:text="CONFIRMAR NOVA PASSWORD" />
+            android:text="@string/editar_password_confirmar" />
 
         <EditText
             android:id="@+id/editPasswordConfirmar"
@@ -112,7 +112,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="28dp"
-            android:text="Guardar alterações"
+            android:text="@string/editar_guardar"
             android:backgroundTint="@color/accent"
             android:textColor="@color/contrast" />
 

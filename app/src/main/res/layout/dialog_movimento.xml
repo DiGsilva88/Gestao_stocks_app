@@ -11,7 +11,7 @@
         android:id="@+id/txtTitulo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Movimento de Stock"
+        android:text="@string/movimento_titulo"
         android:textSize="20sp"
         android:textStyle="bold"
         android:layout_marginBottom="20dp" />
@@ -30,7 +30,7 @@
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Entrada"
+            android:text="@string/movimento_entrada"
             android:checked="true" />
 
         <com.google.android.material.chip.Chip
@@ -38,7 +38,7 @@
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Saída" />
+            android:text="@string/movimento_saida" />
 
     </com.google.android.material.chip.ChipGroup>
 
@@ -62,7 +62,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:labelFor="@id/editQuantidade"
-        android:text="Quantidade"
+        android:text="@string/movimento_quantidade"
         android:textSize="13sp"
         android:layout_marginBottom="6dp" />
 
@@ -82,7 +82,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:labelFor="@id/editMotivo"
-        android:text="Motivo (opcional) — ex: compra, venda, quebra"
+        android:text="@string/movimento_motivo"
         android:textSize="13sp"
         android:layout_marginBottom="6dp" />
 

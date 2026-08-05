@@ -99,7 +99,7 @@
         android:background="@drawable/bg_icone"
         android:padding="12dp"
         android:src="@drawable/ic_movimento"
-        android:contentDescription="Registar movimento"
+        android:contentDescription="@string/stock_registar_movimento"
         app:tint="@color/accent" />
 
 </LinearLayout>

@@ -39,7 +39,7 @@
             android:layout_width="96dp"
             android:layout_height="96dp"
             android:src="@drawable/ic_inventory"
-            android:contentDescription="Logótipo"
+            android:contentDescription="@string/splash_logotipo"
             app:tint="@color/splash_texto" />
 
         <TextView
@@ -48,7 +48,7 @@
             android:layout_marginTop="20dp"
             android:fontFamily="sans-serif-condensed-medium"
             android:letterSpacing="0.15"
-            android:text="Stockify"
+            android:text="@string/app_name"
             android:textColor="@color/splash_texto"
             android:textSize="32sp"
             android:textStyle="bold" />
@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:alpha="0.8"
-            android:text="Controla o teu stock em tempo real"
+            android:text="@string/splash_subtitulo"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="@color/splash_texto"
             android:textSize="15sp"
@@ -72,7 +72,7 @@
             android:alpha="0.8"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            android:text="Acompanha atualizações de  stock e lucro num único painel, onde quer que estejas"
+            android:text="@string/splash_descricao"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="@color/splash_texto"
             android:textSize="12sp" />
@@ -87,7 +87,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:layout_margin="28dp"
-        android:text="Começar"
+        android:text="@string/splash_comecar"
         android:backgroundTint="@color/splash_texto"
         android:textColor="@color/splash_fundo"
         android:textStyle="bold" />

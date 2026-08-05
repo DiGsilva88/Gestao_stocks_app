@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.example.gesto_stocks.R
 import com.example.gesto_stocks.data.local.StockifyDatabase
 import com.example.gesto_stocks.data.model.Produto
 import com.example.gesto_stocks.databinding.FragmentProdutoFormBinding
@@ -94,7 +95,7 @@ class ProdutoFormFragment : Fragment() {
 
         if (produtoId != -1) {
             // Modo edição: carrega os dados guardados na base de dados
-            binding.txtTitulo.text = "Editar Produto"
+            binding.txtTitulo.setText(R.string.form_editar_produto)
             binding.btnEliminar.visibility = View.VISIBLE
             carregarProduto()
         } else if (Rascunho.existe) {
@@ -176,7 +177,7 @@ class ProdutoFormFragment : Fragment() {
 //    /** Devolve o texto do chip de categoria selecionado. */
     private fun categoriaEscolhida(): String {
         val idChip = binding.chipCategorias.checkedChipId
-        if (idChip == View.NO_ID) return "Motores"
+        if (idChip == View.NO_ID) return getString(R.string.categoria_motores)
         return binding.chipCategorias.findViewById<Chip>(idChip).text.toString()
     }
 //
@@ -186,11 +187,11 @@ class ProdutoFormFragment : Fragment() {
         val sku = binding.editSku.text.toString().trim()
 
         if (nome.isEmpty()) {
-            binding.editNome.error = "O nome é obrigatório"
+            binding.editNome.error = getString(R.string.erro_nome_produto)
             return
         }
         if (sku.isEmpty()) {
-            binding.editSku.error = "O SKU é obrigatório"
+            binding.editSku.error = getString(R.string.erro_sku)
             return
         }
 
@@ -211,7 +212,7 @@ class ProdutoFormFragment : Fragment() {
 
         viewModel.guardar(produto)
         Rascunho.limpar()
-        Toast.makeText(requireContext(), "Produto guardado", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), R.string.produto_guardado, Toast.LENGTH_SHORT).show()
         findNavController().navigateUp()
     }
 
@@ -220,13 +221,13 @@ class ProdutoFormFragment : Fragment() {
         val pr = produtoAtual ?: return
 
         AlertDialog.Builder(requireContext())
-            .setTitle("Eliminar produto")
-            .setMessage("Esta ação não pode ser desfeita.")
-            .setPositiveButton("Eliminar") { _, _ ->
+            .setTitle(R.string.eliminar_titulo)
+            .setMessage(R.string.eliminar_mensagem)
+            .setPositiveButton(R.string.eliminar) { _, _ ->
                 viewModel.eliminar(pr)
                 findNavController().navigateUp()
             }
-            .setNegativeButton("Cancelar", null)
+            .setNegativeButton(R.string.cancelar, null)
             .show()
     }
 

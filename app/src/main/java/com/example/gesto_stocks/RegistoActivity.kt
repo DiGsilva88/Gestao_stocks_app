@@ -33,7 +33,7 @@ class RegistoActivity : AppCompatActivity() {
 
             lifecycleScope.launch {
                 if (dao.buscarPorEmail(email) != null) {
-                    erro(binding.editEmail, "Já existe uma conta com este email")
+                    erro(binding.editEmail, getString(R.string.erro_email_existente))
                     return@launch
                 }
 
@@ -62,16 +62,20 @@ class RegistoActivity : AppCompatActivity() {
 
         // Cada erro é marcado no campo que o causou, para que o utilizador
         // (e o leitor de ecrã) saiba exatamente o que corrigir
-        if (nome.isEmpty()) return erro(binding.editNome, "Indica o teu nome")
-        if (email.isEmpty()) return erro(binding.editEmail, "Indica o teu email")
+        if (nome.isEmpty()) {
+            return erro(binding.editNome, getString(R.string.erro_nome_obrigatorio))
+        }
+        if (email.isEmpty()) {
+            return erro(binding.editEmail, getString(R.string.erro_email_obrigatorio))
+        }
         if (!email.contains("@") || !email.contains(".")) {
-            return erro(binding.editEmail, "Email inválido")
+            return erro(binding.editEmail, getString(R.string.erro_email_invalido))
         }
         if (password.length < 6) {
-            return erro(binding.editPassword, "Precisa de pelo menos 6 caracteres")
+            return erro(binding.editPassword, getString(R.string.erro_password_curta))
         }
         if (password != confirmar) {
-            return erro(binding.editConfirmar, "As passwords não coincidem")
+            return erro(binding.editConfirmar, getString(R.string.erro_passwords_diferentes))
         }
         return true
     }

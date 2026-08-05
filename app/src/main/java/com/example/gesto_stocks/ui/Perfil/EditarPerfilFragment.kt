@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.example.gesto_stocks.R
 import com.example.gesto_stocks.data.local.StockifyDatabase
 import com.example.gesto_stocks.data.model.Utilizador
 import com.example.gesto_stocks.databinding.FragmentEditarPerfilBinding
@@ -67,7 +68,7 @@ class EditarPerfilFragment : Fragment() {
         val confirmar = binding.editPasswordConfirmar.text.toString()
 
         if (nome.isEmpty()) {
-            binding.editNome.error = "O nome é obrigatório"
+            binding.editNome.error = getString(R.string.erro_nome_vazio)
             return
         }
 
@@ -81,15 +82,16 @@ class EditarPerfilFragment : Fragment() {
             // A password atual é pedida para impedir alterações por alguém
             // que encontre o telemóvel desbloqueado
             if (hashPassword(atual) != u.passwordHash) {
-                binding.editPasswordAtual.error = "Password atual incorreta"
+                binding.editPasswordAtual.error = getString(R.string.erro_password_atual)
                 return
             }
             if (nova.length < 5) {
-                binding.editPasswordNova.error = "Mínimo de 5 caracteres"
+                binding.editPasswordNova.error = getString(R.string.erro_password_curta_5)
                 return
             }
             if (nova != confirmar) {
-                binding.editPasswordConfirmar.error = "As passwords não coincidem"
+                binding.editPasswordConfirmar.error =
+                    getString(R.string.erro_passwords_diferentes)
                 return
             }
             novoHash = hashPassword(nova)
@@ -100,11 +102,10 @@ class EditarPerfilFragment : Fragment() {
         lifecycleScope.launch {
             dao.atualizar(u.copy(nome = nome, passwordHash = novoHash))
 
-            val msg = if (querMudarPassword) {
-                "Perfil e password atualizados"
-            } else {
-                "Perfil atualizado"
-            }
+            val msg = getString(
+                if (querMudarPassword) R.string.perfil_password_atualizados
+                else R.string.perfil_atualizado
+            )
             Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
             findNavController().navigateUp()
         }

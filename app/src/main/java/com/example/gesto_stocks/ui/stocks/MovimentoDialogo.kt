@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.Context
 import android.view.LayoutInflater
 import android.widget.Toast
+import com.example.gesto_stocks.R
 import com.example.gesto_stocks.data.local.StockifyDatabase
 import com.example.gesto_stocks.data.model.Produto
 import com.example.gesto_stocks.util.Sessao
@@ -28,13 +29,15 @@ class MovimentoDialogo(
         val binding = DialogMovimentoBinding.inflate(LayoutInflater.from(context))
 
         // Preenche os dados do produto
-        binding.txtProduto.text = "${produto.nome}  (${produto.sku})"
-        binding.txtStockAtual.text = "Stock atual: ${produto.quantidade} unidades"
+        binding.txtProduto.text =
+            context.getString(R.string.movimento_produto, produto.nome, produto.sku)
+        binding.txtStockAtual.text = context.resources.getQuantityString(
+            R.plurals.movimento_stock_atual, produto.quantidade, produto.quantidade)
 
         val dialogo = AlertDialog.Builder(context)
             .setView(binding.root)
-            .setPositiveButton("Confirmar", null)  // null para controlar o fecho
-            .setNegativeButton("Cancelar", null)
+            .setPositiveButton(R.string.confirmar, null)  // null para controlar o fecho
+            .setNegativeButton(R.string.cancelar, null)
             .create()
 
         dialogo.show()
@@ -44,7 +47,8 @@ class MovimentoDialogo(
             val qtd = binding.editQuantidade.text.toString().toIntOrNull()
 
             if (qtd == null || qtd <= 0) {
-                binding.editQuantidade.error = "Introduz uma quantidade válida"
+                binding.editQuantidade.error =
+                    context.getString(R.string.erro_quantidade_invalida)
                 return@setOnClickListener
             }
 
@@ -57,8 +61,8 @@ class MovimentoDialogo(
 
             // Impede stock negativo
             if (novaQuantidade < 0) {
-                binding.editQuantidade.error =
-                    "Não há stock suficiente (apenas ${produto.quantidade})"
+                binding.editQuantidade.error = context.getString(
+                    R.string.erro_stock_insuficiente, produto.quantidade)
                 return@setOnClickListener
             }
 
@@ -92,9 +96,12 @@ class MovimentoDialogo(
                 )
 
                 withContext(Dispatchers.Main) {
-                    val acao = if (entrada) "Entrada" else "Saída"
-                    Toast.makeText(context,
-                        "$acao de $qtd registada", Toast.LENGTH_SHORT).show()
+                    val mensagem = context.getString(
+                        if (entrada) R.string.movimento_entrada_registada
+                        else R.string.movimento_saida_registada,
+                        qtd
+                    )
+                    Toast.makeText(context, mensagem, Toast.LENGTH_SHORT).show()
                     dialogo.dismiss()
                     onConcluido()
                 }

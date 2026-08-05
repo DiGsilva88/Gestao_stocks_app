@@ -26,7 +26,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Novo Produto"
+                android:text="@string/form_novo_produto"
                 android:textColor="@color/text_primary"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -37,7 +37,7 @@
                 android:layout_height="48dp"
                 android:background="@drawable/bg_campo"
                 android:src="@android:drawable/ic_menu_close_clear_cancel"
-                android:contentDescription="Fechar"
+                android:contentDescription="@string/fechar"
                 app:tint="@color/text_primary" />
 
         </LinearLayout>
@@ -63,7 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="Escolher imagem"
+                android:text="@string/form_escolher_imagem"
                 android:backgroundTint="@color/card"
                 android:textColor="@color/text_primary" />
 
@@ -73,7 +73,7 @@
         <TextView
             style="@style/RotuloCampo"
             android:labelFor="@id/editNome"
-            android:text="NOME DO PRODUTO" />
+            android:text="@string/form_nome" />
 
         <EditText
             android:id="@+id/editNome"
@@ -96,7 +96,7 @@
                 <TextView
                     style="@style/RotuloCampo"
                     android:labelFor="@id/editSku"
-                    android:text="SKU" />
+                    android:text="@string/form_sku" />
 
                 <EditText
                     android:id="@+id/editSku"
@@ -115,7 +115,7 @@
                 <TextView
                     style="@style/RotuloCampo"
                     android:labelFor="@id/editPreco"
-                    android:text="PREÇO VENDA (€)" />
+                    android:text="@string/form_preco_venda" />
 
                 <EditText
                     android:id="@+id/editPreco"
@@ -129,7 +129,7 @@
         <TextView
             style="@style/RotuloCampo"
             android:labelFor="@id/editPrecoCusto"
-            android:text="PREÇO DE CUSTO (€)" />
+            android:text="@string/form_preco_custo" />
 
         <EditText
             android:id="@+id/editPrecoCusto"
@@ -139,7 +139,7 @@
         <!-- Categoria -->
         <TextView
             style="@style/RotuloCampo"
-            android:text="CATEGORIA" />
+            android:text="@string/form_categoria" />
 
         <HorizontalScrollView
             android:layout_width="match_parent"
@@ -160,32 +160,32 @@
                     style="@style/ChipFiltro"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Motores"
+                    android:text="@string/categoria_motores"
                     android:checked="true" />
 
                 <com.google.android.material.chip.Chip
                     style="@style/ChipFiltro"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Sensores" />
+                    android:text="@string/categoria_sensores" />
 
                 <com.google.android.material.chip.Chip
                     style="@style/ChipFiltro"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Cabos" />
+                    android:text="@string/categoria_cabos" />
 
                 <com.google.android.material.chip.Chip
                     style="@style/ChipFiltro"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Filtros" />
+                    android:text="@string/categoria_filtros" />
 
                 <com.google.android.material.chip.Chip
                     style="@style/ChipFiltro"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Válvulas" />
+                    android:text="@string/categoria_valvulas" />
 
             </com.google.android.material.chip.ChipGroup>
 
@@ -195,7 +195,7 @@
         <TextView
             style="@style/RotuloCampo"
             android:labelFor="@id/editFornecedor"
-            android:text="FORNECEDOR" />
+            android:text="@string/form_fornecedor" />
 
         <EditText
             android:id="@+id/editFornecedor"
@@ -206,7 +206,7 @@
         <TextView
             style="@style/RotuloCampo"
             android:labelFor="@id/editStockMinimo"
-            android:text="STOCK MÍNIMO" />
+            android:text="@string/form_stock_minimo" />
 
         <EditText
             android:id="@+id/editStockMinimo"
@@ -217,7 +217,7 @@
         <TextView
             style="@style/RotuloCampo"
             android:labelFor="@id/editQuantidade"
-            android:text="QUANTIDADE EM STOCK" />
+            android:text="@string/form_quantidade" />
 
         <EditText
             android:id="@+id/editQuantidade"
@@ -229,7 +229,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Guardar"
+            android:text="@string/guardar"
             android:backgroundTint="@color/accent"
             android:textColor="@color/contrast" />
 
@@ -238,7 +238,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:text="Eliminar"
+            android:text="@string/eliminar"
             android:backgroundTint="@color/critico_fundo"
             android:textColor="@color/critico"
             android:visibility="gone" />
