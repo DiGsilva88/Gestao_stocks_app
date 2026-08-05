@@ -77,14 +77,14 @@ class PerfilFragment : Fragment() {
 
     private fun confirmarSaida() {
         AlertDialog.Builder(requireContext())
-            .setTitle("Terminar sessão")
-            .setMessage("Vais voltar ao ecrã de entrada.")
-            .setPositiveButton("Terminar") { _, _ ->
+            .setTitle(R.string.perfil_terminar_sessao)
+            .setMessage(R.string.sair_mensagem)
+            .setPositiveButton(R.string.sair_confirmar) { _, _ ->
                 Sessao(requireContext()).terminar()
                 startActivity(Intent(requireContext(), LoginActivity::class.java))
                 requireActivity().finish()
             }
-            .setNegativeButton("Cancelar", null)
+            .setNegativeButton(R.string.cancelar, null)
             .show()
     }
 

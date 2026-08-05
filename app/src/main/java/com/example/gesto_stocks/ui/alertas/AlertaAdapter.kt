@@ -25,7 +25,7 @@ class AlertaAdapter(
             b.txtNome.text = pr.nome
             b.txtCategoria.text = pr.categoria
             b.txtQuantidade.text = pr.quantidade.toString()
-            b.txtMinimo.text = "Mín: ${pr.stockMinimo}"
+            b.txtMinimo.text = ctx.getString(R.string.item_minimo, pr.stockMinimo)
 
             val esgotado = pr.quantidade == 0
             val cor = ctx.getColor(
@@ -34,7 +34,9 @@ class AlertaAdapter(
 
             b.txtQuantidade.setTextColor(cor)
             b.txtEstado.setTextColor(cor)
-            b.txtEstado.text = if (esgotado) "Esgotado" else "Baixo"
+            b.txtEstado.text = ctx.getString(
+                if (esgotado) R.string.estado_esgotado else R.string.estado_baixo
+            )
             b.barraNivel.progressTintList =
                 android.content.res.ColorStateList.valueOf(cor)
 

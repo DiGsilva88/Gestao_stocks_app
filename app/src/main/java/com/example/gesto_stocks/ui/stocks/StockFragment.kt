@@ -91,7 +91,7 @@ class StockFragment : Fragment() {
         // basta ler o primeiro. Sem seleção, mostra todas as categorias
         binding.chipCategorias.setOnCheckedStateChangeListener { grupo, ids ->
             val categoria = if (ids.isEmpty()) {
-                "Todos"
+                getString(R.string.categoria_todos)
             } else {
                 grupo.findViewById<Chip>(ids.first()).text.toString()
             }
@@ -111,8 +111,8 @@ class StockFragment : Fragment() {
         daoAlertas.listarEmAlerta().observe(viewLifecycleOwner) { lista ->
             adapterAlertas.submitList(lista)
 
-            binding.txtContadorAlertas.text =
-                if (lista.size == 1) "1 item" else "${lista.size} itens"
+            binding.txtContadorAlertas.text = resources.getQuantityString(
+                R.plurals.stock_itens, lista.size, lista.size)
 
             val vazio = lista.isEmpty()
             binding.txtVazioAlertas.visibility = if (vazio) View.VISIBLE else View.GONE
@@ -134,9 +134,9 @@ class StockFragment : Fragment() {
     private fun mostrarMenuOrdenacao(ancora: View) {
         val ctx = android.view.ContextThemeWrapper(requireContext(), R.style.MenuPopup)
         val menu = PopupMenu(ctx, ancora)
-        menu.menu.add(0, 0, 0, "Nome (A-Z)")
-        menu.menu.add(0, 1, 1, "Quantidade (menor primeiro)")
-        menu.menu.add(0, 2, 2, "Valor (maior primeiro)")
+        menu.menu.add(0, 0, 0, R.string.ordenar_nome)
+        menu.menu.add(0, 1, 1, R.string.ordenar_quantidade)
+        menu.menu.add(0, 2, 2, R.string.ordenar_valor)
 
         menu.setOnMenuItemClickListener { item ->
             viewModel.ordenar(item.itemId)

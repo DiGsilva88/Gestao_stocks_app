@@ -25,7 +25,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Stock"
+                android:text="@string/stock_titulo"
                 android:textColor="@color/text_primary"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -37,7 +37,7 @@
                 android:background="@drawable/bg_icone"
                 android:padding="12dp"
                 android:src="@drawable/ic_ordenar"
-                android:contentDescription="Ordenar lista"
+                android:contentDescription="@string/stock_ordenar"
                 app:tint="@color/accent" />
 
         </LinearLayout>
@@ -58,12 +58,12 @@
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Produtos" />
+                android:text="@string/produtos" />
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Alertas" />
+                android:text="@string/alertas" />
 
         </com.google.android.material.tabs.TabLayout>
 
@@ -80,7 +80,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:hint="Pesquisar produto ou SKU"
+                android:hint="@string/stock_pesquisar"
                 android:background="@drawable/bg_campo"
                 android:minHeight="48dp"
                 android:padding="12dp"
@@ -110,38 +110,38 @@
                         style="@style/ChipFiltro"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Todos"
+                        android:text="@string/categoria_todos"
                         android:checked="true" />
 
                     <com.google.android.material.chip.Chip
                         style="@style/ChipFiltro"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Motores" />
+                        android:text="@string/categoria_motores" />
 
                     <com.google.android.material.chip.Chip
                         style="@style/ChipFiltro"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Sensores" />
+                        android:text="@string/categoria_sensores" />
 
                     <com.google.android.material.chip.Chip
                         style="@style/ChipFiltro"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Cabos" />
+                        android:text="@string/categoria_cabos" />
 
                     <com.google.android.material.chip.Chip
                         style="@style/ChipFiltro"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Filtros" />
+                        android:text="@string/categoria_filtros" />
 
                     <com.google.android.material.chip.Chip
                         style="@style/ChipFiltro"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Válvulas" />
+                        android:text="@string/categoria_valvulas" />
 
                 </com.google.android.material.chip.ChipGroup>
 
@@ -162,7 +162,7 @@
                 android:layout_weight="1"
                 android:layout_marginTop="16dp"
                 android:gravity="center"
-                android:text="Nenhum produto encontrado."
+                android:text="@string/stock_vazio"
                 android:textColor="@color/text_muted"
                 android:textSize="15sp"
                 android:visibility="gone" />
@@ -201,7 +201,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Tudo em ordem.&#10;Nenhum produto abaixo do mínimo."
+                android:text="@string/sem_alertas"
                 android:textColor="@color/text_muted"
                 android:textSize="15sp"
                 android:visibility="gone" />
@@ -217,7 +217,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="20dp"
         android:src="@drawable/ic_add"
-        android:contentDescription="Adicionar produto"
+        android:contentDescription="@string/stock_adicionar"
         app:backgroundTint="@color/accent"
         app:tint="@color/contrast" />
 

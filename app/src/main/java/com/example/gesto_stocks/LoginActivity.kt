@@ -29,7 +29,7 @@ class LoginActivity : AppCompatActivity() {
 
             if (email.isEmpty() || password.isEmpty()) {
                 val campo = if (email.isEmpty()) binding.editEmail else binding.editPassword
-                erro(campo, "Preenche este campo")
+                erro(campo, getString(R.string.erro_campo_obrigatorio))
                 return@setOnClickListener
             }
 
@@ -38,7 +38,7 @@ class LoginActivity : AppCompatActivity() {
 
                 if (utilizador == null ||
                     utilizador.passwordHash != hashPassword(password)) {
-                    erro(binding.editPassword, "Email ou password incorretos")
+                    erro(binding.editPassword, getString(R.string.erro_credenciais))
                     return@launch
                 }
 

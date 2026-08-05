@@ -77,14 +77,14 @@
 
                 <TextView
                     android:id="@+id/txtBadge"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_gravity="top|end"
                     android:background="@drawable/bg_badge"
                     android:gravity="center"
                     android:importantForAccessibility="no"
                     android:textColor="@color/contrast"
-                    android:textSize="10sp"
+                    android:textSize="11sp"
                     android:textStyle="bold"
                     tools:text="3" />
 
@@ -115,7 +115,7 @@
                     android:background="@drawable/bg_icone"
                     android:padding="8dp"
                     android:src="@drawable/ic_inventory"
-                    android:contentDescription="Stock total"
+                    android:contentDescription="@string/inicio_stock_total"
                     app:tint="@color/accent" />
 
                 <LinearLayout
@@ -134,7 +134,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Stock total"
+                        android:text="@string/inicio_stock_total"
                         android:textColor="@color/text_muted"
                         android:textSize="12sp" />
 
@@ -159,7 +159,7 @@
                     android:background="@drawable/bg_icone"
                     android:padding="8dp"
                     android:src="@drawable/ic_euros"
-                    android:contentDescription="Receita total"
+                    android:contentDescription="@string/inicio_receita_total"
                     app:tint="@color/text_primary" />
 
                 <LinearLayout
@@ -179,7 +179,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Receita total"
+                        android:text="@string/inicio_receita_total"
                         android:textColor="@color/text_muted"
                         android:textSize="12sp" />
 
@@ -213,7 +213,7 @@
                     android:background="@drawable/bg_icone"
                     android:padding="8dp"
                     android:src="@drawable/ic_money"
-                    android:contentDescription="Lucro total"
+                    android:contentDescription="@string/inicio_lucro_total"
                     app:tint="@color/text_primary" />
 
                 <LinearLayout
@@ -233,7 +233,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Lucro total"
+                        android:text="@string/inicio_lucro_total"
                         android:textColor="@color/text_muted"
                         android:textSize="12sp" />
 
@@ -258,7 +258,7 @@
                     android:background="@drawable/bg_icone"
                     android:padding="8dp"
                     android:src="@drawable/ic_warning"
-                    android:contentDescription="Alertas de stock"
+                    android:contentDescription="@string/inicio_alertas_stock"
                     app:tint="@color/aviso" />
 
                 <LinearLayout
@@ -277,7 +277,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Alertas de stock"
+                        android:text="@string/inicio_alertas_stock"
                         android:textColor="@color/text_muted"
                         android:textSize="12sp" />
 
@@ -293,7 +293,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:gravity="center"
-            android:text="Ainda não há produtos.&#10;Toca no separador Stock para adicionar."
+            android:text="@string/inicio_vazio"
             android:textColor="@color/text_muted"
             android:textSize="14sp"
             android:visibility="gone" />
@@ -311,7 +311,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Vendas por Categoria"
+                android:text="@string/inicio_vendas_categoria"
                 android:textColor="@color/text_primary"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -349,7 +349,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:layout_marginBottom="12dp"
-            android:text="Top Produtos por Receita"
+            android:text="@string/inicio_top_produtos"
             android:textColor="@color/text_primary"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -367,7 +367,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:layout_marginBottom="12dp"
-            android:text="Alertas de Stock Baixo"
+            android:text="@string/inicio_alertas_baixo"
             android:textColor="@color/text_primary"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -384,7 +384,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Tudo em ordem.&#10;Nenhum produto abaixo do mínimo."
+            android:text="@string/sem_alertas"
             android:textColor="@color/text_muted"
             android:textSize="14sp"
             android:visibility="gone" />

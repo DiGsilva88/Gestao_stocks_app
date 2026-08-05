@@ -1,3 +1,164 @@
 <resources>
     <string name="app_name">Stockify</string>
+
+    <!-- Ações comuns -->
+    <string name="guardar">Guardar</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="confirmar">Confirmar</string>
+    <string name="eliminar">Eliminar</string>
+    <string name="fechar">Fechar</string>
+    <string name="produtos">Produtos</string>
+    <string name="alertas">Alertas</string>
+
+    <!-- Ecrã de entrada -->
+    <string name="splash_logotipo">Logótipo</string>
+    <string name="splash_subtitulo">Controla o teu stock em tempo real</string>
+    <string name="splash_descricao">Acompanha atualizações de stock e lucro num único painel, onde quer que estejas</string>
+    <string name="splash_comecar">Começar</string>
+
+    <!-- Login -->
+    <string name="login_titulo">Login</string>
+    <string name="login_utilizador">Utilizador</string>
+    <string name="login_password">Password</string>
+    <string name="login_entrar">Entrar</string>
+    <string name="login_entrar_botao">Entrar →</string>
+    <string name="login_sem_conta">Ainda não tenho conta</string>
+
+    <!-- Registo -->
+    <string name="registo_criar_conta">Criar conta</string>
+    <string name="registo_nome">Nome</string>
+    <string name="registo_email">Email</string>
+    <string name="registo_password">Password</string>
+    <string name="registo_confirmar">Confirmar password</string>
+    <string name="registo_com_conta">Já tenho conta</string>
+
+    <!-- Mensagens de erro de autenticação -->
+    <string name="erro_campo_obrigatorio">Preenche este campo</string>
+    <string name="erro_credenciais">Email ou password incorretos</string>
+    <string name="erro_nome_obrigatorio">Indica o teu nome</string>
+    <string name="erro_email_obrigatorio">Indica o teu email</string>
+    <string name="erro_email_invalido">Email inválido</string>
+    <string name="erro_email_existente">Já existe uma conta com este email</string>
+    <string name="erro_password_curta">Precisa de pelo menos 6 caracteres</string>
+    <string name="erro_passwords_diferentes">As passwords não coincidem</string>
+
+    <!-- Navegação -->
+    <string name="nav_perfil">Perfil</string>
+    <string name="nav_painel">Painel</string>
+    <string name="nav_inventario">Inventário</string>
+
+    <!-- Painel inicial -->
+    <string name="inicio_stock_total">Stock total</string>
+    <string name="inicio_receita_total">Receita total</string>
+    <string name="inicio_lucro_total">Lucro total</string>
+    <string name="inicio_alertas_stock">Alertas de stock</string>
+    <string name="inicio_vazio">Ainda não há produtos.\nToca no separador Stock para adicionar.</string>
+    <string name="inicio_vendas_categoria">Vendas por Categoria</string>
+    <string name="inicio_top_produtos">Top Produtos por Receita</string>
+    <string name="inicio_alertas_baixo">Alertas de Stock Baixo</string>
+    <string name="sem_alertas">Tudo em ordem.\nNenhum produto abaixo do mínimo.</string>
+    <string name="saudacao_bom_dia">Bom dia</string>
+    <string name="saudacao_boa_tarde">Boa tarde</string>
+    <string name="saudacao_boa_noite">Boa noite</string>
+    <string name="desc_sem_alertas">Sem alertas de stock</string>
+    <plurals name="desc_alertas_stock">
+        <item quantity="one">%d alerta de stock</item>
+        <item quantity="other">%d alertas de stock</item>
+    </plurals>
+    <string name="percentagem">%d%%</string>
+
+    <!-- Lista de stock -->
+    <string name="stock_titulo">Stock</string>
+    <string name="stock_ordenar">Ordenar lista</string>
+    <string name="stock_pesquisar">Pesquisar produto ou SKU</string>
+    <string name="stock_vazio">Nenhum produto encontrado.</string>
+    <string name="stock_adicionar">Adicionar produto</string>
+    <string name="stock_registar_movimento">Registar movimento</string>
+    <plurals name="stock_itens">
+        <item quantity="one">%d item</item>
+        <item quantity="other">%d itens</item>
+    </plurals>
+    <string name="ordenar_nome">Nome (A-Z)</string>
+    <string name="ordenar_quantidade">Quantidade (menor primeiro)</string>
+    <string name="ordenar_valor">Valor (maior primeiro)</string>
+
+    <!-- Categorias. ATENÇÃO: o texto do chip é gravado tal e qual na base de
+         dados e usado para filtrar. Traduzir isto sem separar rótulo de chave
+         parte os filtros e os produtos já gravados. -->
+    
+    <string name="categoria_todos">Todos</string>
+    <string name="categoria_motores">Motores</string>
+    <string name="categoria_sensores">Sensores</string>
+    <string name="categoria_cabos">Cabos</string>
+    <string name="categoria_filtros">Filtros</string>
+    <string name="categoria_valvulas">Válvulas</string>
+
+    <!-- Estado do stock de um produto -->
+    <string name="estado_ok">OK</string>
+    <string name="estado_baixo">Baixo</string>
+    <string name="estado_esgotado">Esgotado</string>
+    <string name="item_minimo">Mín: %d</string>
+    <string name="produto_detalhe">%1$s · %2$s · %3$s</string>
+
+    <!-- Formulário de produto -->
+    <string name="form_novo_produto">Novo Produto</string>
+    <string name="form_editar_produto">Editar Produto</string>
+    <string name="form_escolher_imagem">Escolher imagem</string>
+    <string name="form_nome">NOME DO PRODUTO</string>
+    <string name="form_sku">SKU</string>
+    <string name="form_preco_venda">PREÇO VENDA (€)</string>
+    <string name="form_preco_custo">PREÇO DE CUSTO (€)</string>
+    <string name="form_categoria">CATEGORIA</string>
+    <string name="form_fornecedor">FORNECEDOR</string>
+    <string name="form_stock_minimo">STOCK MÍNIMO</string>
+    <string name="form_quantidade">QUANTIDADE EM STOCK</string>
+    <string name="erro_nome_produto">O nome é obrigatório</string>
+    <string name="erro_sku">O SKU é obrigatório</string>
+    <string name="produto_guardado">Produto guardado</string>
+    <string name="eliminar_titulo">Eliminar produto</string>
+    <string name="eliminar_mensagem">Esta ação não pode ser desfeita.</string>
+
+    <!-- Perfil -->
+    <string name="perfil_em_alerta">Em alerta</string>
+    <string name="perfil_categorias">Categorias</string>
+    <string name="perfil_conta">CONTA</string>
+    <string name="perfil_auth_local">Autenticação local</string>
+    <string name="perfil_dados_locais">Os dados ficam guardados apenas neste dispositivo.</string>
+    <string name="perfil_editar">Editar perfil</string>
+    <string name="perfil_terminar_sessao">Terminar sessão</string>
+    <string name="sair_mensagem">Vais voltar ao ecrã de entrada.</string>
+    <string name="sair_confirmar">Terminar</string>
+
+    <!-- Editar perfil -->
+    <string name="editar_perfil_titulo">Editar Perfil</string>
+    <string name="editar_nome">NOME</string>
+    <string name="editar_utilizador">UTILIZADOR</string>
+    <string name="editar_alterar_password">Alterar password</string>
+    <string name="editar_password_opcional">Deixa os campos em branco para manter a password atual.</string>
+    <string name="editar_password_atual">PASSWORD ATUAL</string>
+    <string name="editar_password_nova">NOVA PASSWORD</string>
+    <string name="editar_password_confirmar">CONFIRMAR NOVA PASSWORD</string>
+    <string name="editar_guardar">Guardar alterações</string>
+    <string name="erro_nome_vazio">O nome é obrigatório</string>
+    <string name="erro_password_atual">Password atual incorreta</string>
+    <string name="erro_password_curta_5">Mínimo de 5 caracteres</string>
+    <string name="perfil_atualizado">Perfil atualizado</string>
+    <string name="perfil_password_atualizados">Perfil e password atualizados</string>
+
+    <!-- Movimento de stock -->
+    <string name="movimento_titulo">Movimento de Stock</string>
+    <string name="movimento_entrada">Entrada</string>
+    <string name="movimento_saida">Saída</string>
+    <string name="movimento_quantidade">Quantidade</string>
+    <string name="movimento_motivo">Motivo (opcional) — ex: compra, venda, quebra</string>
+    <string name="movimento_produto">%1$s  (%2$s)</string>
+    <plurals name="movimento_stock_atual">
+        <item quantity="one">Stock atual: %d unidade</item>
+        <item quantity="other">Stock atual: %d unidades</item>
+    </plurals>
+    <string name="movimento_entrada_registada">Entrada de %d registada</string>
+    <string name="movimento_saida_registada">Saída de %d registada</string>
+    <string name="erro_quantidade_invalida">Introduz uma quantidade válida</string>
+    <string name="erro_stock_insuficiente">Não há stock suficiente (apenas %d)</string>
+
 </resources>

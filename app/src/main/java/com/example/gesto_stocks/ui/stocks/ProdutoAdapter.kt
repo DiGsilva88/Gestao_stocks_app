@@ -33,22 +33,23 @@ class ProdutoAdapter(
             val ctx = b.root.context
 
             b.txtNome.text = p.nome
-            b.txtSku.text = "${p.sku} · ${p.categoria} · ${moeda.format(p.preco)}"
+            b.txtSku.text = ctx.getString(
+                R.string.produto_detalhe, p.sku, p.categoria, moeda.format(p.preco))
             b.txtQuantidade.text = p.quantidade.toString()
 
             when {
                 p.quantidade == 0 -> {
-                    b.txtEstado.text = "Esgotado"
+                    b.txtEstado.text = ctx.getString(R.string.estado_esgotado)
                     b.txtEstado.setTextColor(ctx.getColor(R.color.critico))
                     b.txtQuantidade.setTextColor(ctx.getColor(R.color.critico))
                 }
                 p.quantidade < p.stockMinimo -> {
-                    b.txtEstado.text = "Baixo"
+                    b.txtEstado.text = ctx.getString(R.string.estado_baixo)
                     b.txtEstado.setTextColor(ctx.getColor(R.color.aviso))
                     b.txtQuantidade.setTextColor(ctx.getColor(R.color.aviso))
                 }
                 else -> {
-                    b.txtEstado.text = "OK"
+                    b.txtEstado.text = ctx.getString(R.string.estado_ok)
                     b.txtEstado.setTextColor(ctx.getColor(R.color.accent))
                     b.txtQuantidade.setTextColor(ctx.getColor(R.color.accent))
                 }

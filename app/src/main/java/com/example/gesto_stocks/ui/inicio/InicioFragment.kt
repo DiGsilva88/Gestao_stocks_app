@@ -71,10 +71,10 @@ class InicioFragment : Fragment() {
             binding.txtEmAlerta.text = it.toString()
             binding.txtBadge.text = it.toString()
             binding.txtBadge.visibility = if (it == 0) View.GONE else View.VISIBLE
-            binding.blocoNotificacoes.contentDescription = when (it) {
-                0 -> "Sem alertas de stock"
-                1 -> "1 alerta de stock"
-                else -> "$it alertas de stock"
+            binding.blocoNotificacoes.contentDescription = if (it == 0) {
+                getString(R.string.desc_sem_alertas)
+            } else {
+                resources.getQuantityString(R.plurals.desc_alertas_stock, it, it)
             }
         }
 
@@ -112,7 +112,8 @@ class InicioFragment : Fragment() {
                     setColor(cores[i % cores.size])
                 }
                 item.txtCategoria.text = categoria
-                item.txtPercent.text = "${(valor / total * 100).roundToInt()}%"
+                item.txtPercent.text = getString(
+                    R.string.percentagem, (valor / total * 100).roundToInt())
                 binding.legendaCategorias.addView(item.root)
             }
         }
@@ -151,11 +152,13 @@ class InicioFragment : Fragment() {
     private fun saudacao(): String {
         val hora = java.util.Calendar.getInstance()
             .get(java.util.Calendar.HOUR_OF_DAY)
-        return when {
-            hora < 12 -> "Bom dia"
-            hora < 20 -> "Boa tarde"
-            else -> "Boa noite"
-        }
+        return getString(
+            when {
+                hora < 12 -> R.string.saudacao_bom_dia
+                hora < 20 -> R.string.saudacao_boa_tarde
+                else -> R.string.saudacao_boa_noite
+            }
+        )
     }
     private fun iniciais(nome: String): String {
         val partes = nome.trim().split(" ").filter { it.isNotBlank() }
