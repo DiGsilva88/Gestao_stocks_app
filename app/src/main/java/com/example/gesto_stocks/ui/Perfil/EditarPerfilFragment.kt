@@ -14,6 +14,7 @@ import com.example.gesto_stocks.data.model.Utilizador
 import com.example.gesto_stocks.databinding.FragmentEditarPerfilBinding
 import com.example.gesto_stocks.util.Sessao
 import com.example.gesto_stocks.util.hashPassword
+import com.example.gesto_stocks.util.passwordCorreta
 import kotlinx.coroutines.launch
 
 /**
@@ -81,12 +82,14 @@ class EditarPerfilFragment : Fragment() {
         if (querMudarPassword) {
             // A password atual é pedida para impedir alterações por alguém
             // que encontre o telemóvel desbloqueado
-            if (hashPassword(atual) != u.passwordHash) {
+            if (!passwordCorreta(atual, u.passwordHash)) {
                 binding.editPasswordAtual.error = getString(R.string.erro_password_atual)
                 return
             }
-            if (nova.length < 5) {
-                binding.editPasswordNova.error = getString(R.string.erro_password_curta_5)
+            // Mesmo mínimo do registo: uma password aceite aqui tem de ser
+            // aceite lá, senão o utilizador consegue enfraquecer a sua conta
+            if (nova.length < 6) {
+                binding.editPasswordNova.error = getString(R.string.erro_password_curta)
                 return
             }
             if (nova != confirmar) {

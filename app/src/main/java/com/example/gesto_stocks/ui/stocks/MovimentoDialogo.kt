@@ -9,20 +9,22 @@ import com.example.gesto_stocks.data.local.StockifyDatabase
 import com.example.gesto_stocks.data.model.Produto
 import com.example.gesto_stocks.util.Sessao
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import com.example.gesto_stocks.data.model.Movimento
 import com.example.gesto_stocks.databinding.DialogMovimentoBinding
 
 /**
  * Diálogo para registar entradas e saídas de stock.
  * Atualiza a quantidade do produto e grava o movimento na base de dados.
+ *
+ * O [scope] vem de quem abre o diálogo (o lifecycleScope do Fragment): se o
+ * ecrã desaparecer a meio da gravação, a coroutine é cancelada em vez de
+ * continuar a tocar num diálogo e num contexto já mortos.
  */
 class MovimentoDialogo(
     private val context: Context,
     private val produto: Produto,
-    private val onConcluido: () -> Unit
+    private val scope: CoroutineScope
 ) {
 
     fun mostrar() {
@@ -53,58 +55,45 @@ class MovimentoDialogo(
             }
 
             val entrada = binding.chipEntrada.isChecked
-            val novaQuantidade = if (entrada) {
-                produto.quantidade + qtd
-            } else {
-                produto.quantidade - qtd
-            }
-
-            // Impede stock negativo
-            if (novaQuantidade < 0) {
-                binding.editQuantidade.error = context.getString(
-                    R.string.erro_stock_insuficiente, produto.quantidade)
-                return@setOnClickListener
-            }
-
-            val tipo = if (entrada) "ENTRADA" else "SAIDA"
+            val delta = if (entrada) qtd else -qtd
             val motivo = binding.editMotivo.text.toString().trim()
 
-            // Obtém o nome do utilizador com sessão para registar quem fez
             val sessao = Sessao(context)
             val db = StockifyDatabase.obter(context)
 
-            CoroutineScope(Dispatchers.IO).launch {
-                // Buscar o nome do utilizador
+            scope.launch {
+                // Regista quem fez o movimento
                 val utilizador = db.utilizadorDao()
                     .buscarPorId(sessao.utilizadorId())?.nome ?: "Desconhecido"
 
-                // Atualizar a quantidade do produto
-                db.produtoDao().atualizar(
-                    produto.copy(quantidade = novaQuantidade)
-                )
-
-                // Registar o movimento
-                db.movimentoDao().inserir(
+                val gravado = db.registarMovimento(
                     Movimento(
                         produtoId = produto.id,
                         nomeProduto = produto.nome,
-                        tipo = tipo,
+                        tipo = if (entrada) "ENTRADA" else "SAIDA",
                         quantidade = qtd,
                         motivo = motivo,
                         utilizador = utilizador
-                    )
+                    ),
+                    delta
                 )
 
-                withContext(Dispatchers.Main) {
-                    val mensagem = context.getString(
-                        if (entrada) R.string.movimento_entrada_registada
-                        else R.string.movimento_saida_registada,
-                        qtd
-                    )
-                    Toast.makeText(context, mensagem, Toast.LENGTH_SHORT).show()
-                    dialogo.dismiss()
-                    onConcluido()
+                if (!gravado) {
+                    // O stock pode ter mudado desde que o diálogo abriu, por
+                    // isso a quantidade da mensagem é lida agora, não a do ecrã
+                    val atual = db.produtoDao().buscarPorId(produto.id)?.quantidade ?: 0
+                    binding.editQuantidade.error =
+                        context.getString(R.string.erro_stock_insuficiente, atual)
+                    return@launch
                 }
+
+                val mensagem = context.getString(
+                    if (entrada) R.string.movimento_entrada_registada
+                    else R.string.movimento_saida_registada,
+                    qtd
+                )
+                Toast.makeText(context, mensagem, Toast.LENGTH_SHORT).show()
+                dialogo.dismiss()
             }
         }
     }
