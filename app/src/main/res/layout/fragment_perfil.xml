@@ -13,13 +13,23 @@
         android:orientation="vertical"
         android:padding="20dp">
 
+        <ImageButton
+            android:id="@+id/btnMenu"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="start"
+            android:background="@drawable/bg_icone"
+            android:contentDescription="@string/desc_abrir_menu"
+            android:padding="12dp"
+            android:src="@drawable/ic_menu" />
+
         <!-- Avatar -->
         <TextView
             android:id="@+id/txtIniciais"
             android:layout_width="96dp"
             android:layout_height="96dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/bg_avatar"
             android:gravity="center"
             android:textColor="@color/contrast"

@@ -53,4 +53,11 @@
         android:label="Editar Perfil"
         tools:layout="@layout/fragment_editar_perfil" />
 
+    <!-- Aberto pelo menu lateral, a partir de qualquer ecrã principal -->
+    <fragment
+        android:id="@+id/movimentosFragment"
+        android:name="com.example.gesto_stocks.ui.movimentos.MovimentosFragment"
+        android:label="Movimentos"
+        tools:layout="@layout/fragment_movimentos" />
+
 </navigation>

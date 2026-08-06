@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import android.graphics.drawable.GradientDrawable
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.gesto_stocks.MainActivity
 import com.example.gesto_stocks.R
 import com.example.gesto_stocks.data.local.StockifyDatabase
 import com.example.gesto_stocks.databinding.FragmentInicioBinding
@@ -16,6 +17,7 @@ import com.example.gesto_stocks.databinding.ItemLegendaBinding
 import com.example.gesto_stocks.databinding.ItemTopProdutoBinding
 import com.example.gesto_stocks.ui.stocks.MovimentoAdapter
 import com.example.gesto_stocks.util.Sessao
+import com.example.gesto_stocks.util.iniciais
 import kotlinx.coroutines.launch
 import java.text.NumberFormat
 import java.util.Locale
@@ -39,6 +41,8 @@ class InicioFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.btnMenu.setOnClickListener { (requireActivity() as MainActivity).abrirMenu() }
 
         carregarUtilizador()
 
@@ -149,13 +153,5 @@ class InicioFragment : Fragment() {
                 else -> R.string.saudacao_boa_noite
             }
         )
-    }
-    private fun iniciais(nome: String): String {
-        val partes = nome.trim().split(" ").filter { it.isNotBlank() }
-        return when {
-            partes.isEmpty() -> "?"
-            partes.size == 1 -> partes[0].take(1).uppercase()
-            else -> (partes.first().take(1) + partes.last().take(1)).uppercase()
-        }
     }
 }

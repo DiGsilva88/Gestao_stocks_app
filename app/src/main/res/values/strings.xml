@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Stockify</string>
+    <string name="app_name">StockAki</string>
 
     <!-- Ações comuns -->
     <string name="guardar">Guardar</string>
@@ -49,7 +49,7 @@
 
     <!-- Painel inicial -->
     <string name="inicio_stock_total">Stock total</string>
-    <string name="inicio_receita_total">Receita total</string>
+    <string name="inicio_receita_total">Valor stock</string>
     <string name="inicio_lucro_total">Lucro total</string>
     <string name="inicio_alertas_stock">Alertas de stock</string>
     <string name="inicio_vazio">Ainda não há produtos.\nToca no separador Stock para adicionar.</string>
@@ -164,5 +164,17 @@
     <string name="movimento_saida_registada">Saída de %d registada</string>
     <string name="erro_quantidade_invalida">Introduz uma quantidade válida</string>
     <string name="erro_stock_insuficiente">Não há stock suficiente (apenas %d)</string>
+
+    <!-- Menu lateral -->
+    <string name="desc_abrir_menu">Abrir menu</string>
+    <string name="menu_editar_perfil">Editar perfil</string>
+    <string name="menu_movimentos">Histórico de movimentos</string>
+    <string name="menu_sobre">Sobre</string>
+    <string name="sobre_titulo">Stockify</string>
+    <string name="sobre_mensagem">Versão %1$s\n\nGestão de stock de armazém.\nDados guardados apenas neste dispositivo.</string>
+
+    <!-- Ecrã de histórico -->
+    <string name="movimentos_titulo">Histórico de movimentos</string>
+    <string name="movimentos_vazio">Ainda não foi registada nenhuma entrada ou saída.</string>
 
 </resources>
