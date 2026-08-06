@@ -1,10 +1,14 @@
 package com.example.gesto_stocks.ui.stocks
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -16,14 +20,21 @@ import com.example.gesto_stocks.R
 import com.example.gesto_stocks.data.local.StockifyDatabase
 import com.example.gesto_stocks.databinding.FragmentStockBinding
 import com.example.gesto_stocks.ui.alertas.AlertaAdapter
+import com.example.gesto_stocks.util.produtosParaCsv
+import com.example.gesto_stocks.util.produtosParaExcel
 import com.google.android.material.chip.Chip
 import com.google.android.material.tabs.TabLayout
-import com.example.gesto_stocks.ui.stocks.MovimentoDialogo
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 /**
  * Ecrã de listagem de produtos.
- * Permite pesquisar por nome ou SKU, filtrar por categoria, ordenar a lista
- * e abrir o formulário para criar ou editar um produto.
+ * Permite pesquisar por nome ou SKU, filtrar por categoria, ordenar a lista,
+ * exportar os dados e abrir o formulário para criar ou editar um produto.
  */
 class StockFragment : Fragment() {
 
@@ -33,6 +44,20 @@ class StockFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: StockViewModel by viewModels()
+
+    // Guarda o texto do ficheiro entre a escolha do formato e a
+    // devolução do seletor do sistema, que só chega mais tarde
+    private var conteudoPendente: String? = null
+
+    // Tem de ser registado enquanto o Fragment está a ser criado.
+    // Dentro do onViewCreated ou de um listener a app fecha
+    private val criarFicheiro = registerForActivityResult(
+        ActivityResultContracts.CreateDocument("*/*")
+    ) { uri: Uri? ->
+        val conteudo = conteudoPendente
+        conteudoPendente = null
+        if (uri != null && conteudo != null) escrever(uri, conteudo)
+    }
 
     // O clique numa linha leva ao formulário, enviando o id do produto
     // para que o mesmo ecrã saiba que está em modo de edição
@@ -48,6 +73,7 @@ class StockFragment : Fragment() {
             ).mostrar()
         }
     )
+
     private val adapterAlertas = AlertaAdapter(
         onClick = { produto ->
             val args = Bundle().apply { putInt("produtoId", produto.id) }
@@ -72,7 +98,9 @@ class StockFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.btnMenu.setOnClickListener { (requireActivity() as MainActivity).abrirMenu() }
+        binding.btnMenu.setOnClickListener {
+            (requireActivity() as MainActivity).abrirMenu()
+        }
 
         // O layoutManager tem de ser definido antes do adapter,
         // caso contrário a lista aparece vazia
@@ -107,6 +135,8 @@ class StockFragment : Fragment() {
 
         binding.btnOrdenar.setOnClickListener { mostrarMenuOrdenacao(it) }
 
+        binding.btnExportar.setOnClickListener { escolherFormato() }
+
         binding.fabAdicionar.setOnClickListener {
             findNavController().navigate(R.id.acaoStockParaForm)
         }
@@ -119,7 +149,8 @@ class StockFragment : Fragment() {
             adapterAlertas.submitList(lista)
 
             binding.txtContadorAlertas.text = resources.getQuantityString(
-                R.plurals.stock_itens, lista.size, lista.size)
+                R.plurals.stock_itens, lista.size, lista.size
+            )
 
             val vazio = lista.isEmpty()
             binding.txtVazioAlertas.visibility = if (vazio) View.VISIBLE else View.GONE
@@ -129,8 +160,10 @@ class StockFragment : Fragment() {
         binding.tabsStock.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 val mostrarProdutos = tab.position == 0
-                binding.conteudoProdutos.visibility = if (mostrarProdutos) View.VISIBLE else View.GONE
-                binding.conteudoAlertas.visibility = if (mostrarProdutos) View.GONE else View.VISIBLE
+                binding.conteudoProdutos.visibility =
+                    if (mostrarProdutos) View.VISIBLE else View.GONE
+                binding.conteudoAlertas.visibility =
+                    if (mostrarProdutos) View.GONE else View.VISIBLE
             }
             override fun onTabUnselected(tab: TabLayout.Tab) {}
             override fun onTabReselected(tab: TabLayout.Tab) {}
@@ -150,6 +183,64 @@ class StockFragment : Fragment() {
             true
         }
         menu.show()
+    }
+
+    /** Pergunta o formato antes de abrir o seletor de ficheiros. */
+    private fun escolherFormato() {
+        val formatos = arrayOf(
+            getString(R.string.exportar_csv),
+            getString(R.string.exportar_excel)
+        )
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.exportar_titulo)
+            .setItems(formatos) { _, indice -> exportar(csv = indice == 0) }
+            .setNegativeButton(R.string.cancelar, null)
+            .show()
+    }
+
+    /** Gera o texto e pede ao sistema onde o gravar. */
+    private fun exportar(csv: Boolean) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            // Exporta o que está visível, respeitando pesquisa e filtros
+            val lista = viewModel.listaVisivel()
+
+            if (lista.isEmpty()) {
+                aviso(getString(R.string.exportar_sem_dados))
+                return@launch
+            }
+
+            // Com muitos produtos, gerar o texto no ecrã principal
+            // provocaria o aviso de aplicação sem resposta
+            conteudoPendente = withContext(Dispatchers.IO) {
+                if (csv) produtosParaCsv(lista) else produtosParaExcel(lista)
+            }
+
+            val data = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+            criarFicheiro.launch("stockify_$data.${if (csv) "csv" else "xls"}")
+        }
+    }
+
+    /** Escreve no destino escolhido pelo utilizador. */
+    private fun escrever(uri: Uri, conteudo: String) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            val sucesso = withContext(Dispatchers.IO) {
+                try {
+                    requireContext().contentResolver
+                        .openOutputStream(uri)
+                        ?.use { it.write(conteudo.toByteArray(Charsets.UTF_8)) }
+                    true
+                } catch (e: Exception) {
+                    false
+                }
+            }
+            aviso(getString(
+                if (sucesso) R.string.exportar_guardado else R.string.exportar_falhou
+            ))
+        }
+    }
+
+    private fun aviso(texto: String) {
+        Toast.makeText(requireContext(), texto, Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroyView() {

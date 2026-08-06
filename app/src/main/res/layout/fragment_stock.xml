@@ -50,6 +50,17 @@
                 android:contentDescription="@string/stock_ordenar"
                 app:tint="@color/accent" />
 
+            <ImageButton
+                android:id="@+id/btnExportar"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_icone"
+                android:padding="12dp"
+                android:src="@drawable/ic_download"
+                android:contentDescription="@string/exportar_titulo"
+                app:tint="@color/accent" />
+
         </LinearLayout>
 
         <com.google.android.material.tabs.TabLayout

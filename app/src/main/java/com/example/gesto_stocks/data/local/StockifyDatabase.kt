@@ -64,24 +64,32 @@ abstract class StockifyDatabase : RoomDatabase() {
                     // dados locais perdem-se em cada mudança de versão. Escrever
                     // Migration reais antes de haver stock a sério na app.
                     .fallbackToDestructiveMigration(true)
-                    // Os dois callbacks cobrem os dois momentos em que as tabelas
-                    // nascem vazias: ficheiro novo (onCreate) e schema recriado
-                    // pela migração destrutiva sobre um ficheiro que já existia
-                    // (onDestructiveMigration) — este último era a razão por que
-                    // o seed estava a ser feito à mão. Correm dentro da abertura
-                    // da base de dados, portanto os dados existem antes de
-                    // qualquer query, e fora da thread principal.
+                    // Semear no onOpen e não no onCreate/onDestructiveMigration.
+                    // O Room chama o onDestructiveMigration ENTRE o dropAllTables
+                    // e o createAllTables, ou seja, com as tabelas por existir:
+                    // semear aí rebentava com "no such table: produtos" ao
+                    // atualizar sobre uma base antiga. O onOpen corre sempre com
+                    // a base já completa, ficheiro novo ou schema recriado, e
+                    // fora da thread principal.
                     .addCallback(object : Callback() {
-                        override fun onCreate(db: SupportSQLiteDatabase) =
-                            dadosIniciais(db)
-
-                        override fun onDestructiveMigration(db: SupportSQLiteDatabase) =
-                            dadosIniciais(db)
+                        override fun onOpen(db: SupportSQLiteDatabase) {
+                            if (semUtilizadores(db)) dadosIniciais(db)
+                        }
                     })
                     .build()
                     .also { INSTANCIA = it }
             }
         }
+
+        /**
+         * Serve de sentinela ao seed. É a tabela de utilizadores e não a de
+         * produtos porque uma conta nunca é apagada pela app: se o utilizador
+         * esvaziar o stock, os produtos de exemplo não devem voltar.
+         */
+        private fun semUtilizadores(db: SupportSQLiteDatabase): Boolean =
+            db.query("SELECT COUNT(*) FROM utilizadores").use { cursor ->
+                cursor.moveToFirst() && cursor.getInt(0) == 0
+            }
 
         /** Semeia produtos e contas de demonstração. As tabelas estão vazias. */
         private fun dadosIniciais(db: SupportSQLiteDatabase) {

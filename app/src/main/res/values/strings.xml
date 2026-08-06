@@ -177,4 +177,12 @@
     <string name="movimentos_titulo">Histórico de movimentos</string>
     <string name="movimentos_vazio">Ainda não foi registada nenhuma entrada ou saída.</string>
 
+    <!-- Exportação -->
+    <string name="exportar_titulo">Exportar dados</string>
+    <string name="exportar_csv">CSV (.csv)</string>
+    <string name="exportar_excel">Excel (.xls)</string>
+    <string name="exportar_sem_dados">Não há produtos para exportar</string>
+    <string name="exportar_guardado">Ficheiro guardado</string>
+    <string name="exportar_falhou">Não foi possível guardar</string>
+
 </resources>
