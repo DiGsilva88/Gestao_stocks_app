@@ -29,7 +29,7 @@ import kotlinx.coroutines.withContext
  * gravado, para os repor caso o utilizador retroceda e volte ao formulário.
  * O rascunho é limpo quando o produto é guardado com sucesso.
  */
-private object Rascunho {
+internal object Rascunho {
     var nome = ""
     var sku = ""
     var categoria = ""
@@ -195,6 +195,20 @@ class ProdutoFormFragment : Fragment() {
             return
         }
 
+        // O SKU tem índice único na base de dados; esta consulta serve só para
+        // dar uma mensagem em vez de deixar a gravação falhar em silêncio
+        lifecycleScope.launch {
+            val dono = StockifyDatabase.obter(requireContext()).produtoDao().idPorSku(sku)
+            if (dono != null && dono != produtoId) {
+                binding.editSku.error = getString(R.string.erro_sku_duplicado)
+                return@launch
+            }
+            gravar(nome, sku)
+        }
+    }
+
+    /** Constrói o produto a partir dos campos e grava-o. */
+    private fun gravar(nome: String, sku: String) {
 //         id igual a zero indica ao Room que se trata de uma inserção
         val produto = Produto(
             id = produtoId.takeIf { it != -1 } ?: 0,
