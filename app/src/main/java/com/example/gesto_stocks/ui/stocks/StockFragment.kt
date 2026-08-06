@@ -8,6 +8,7 @@ import android.widget.PopupMenu
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.gesto_stocks.MainActivity
@@ -41,9 +42,10 @@ class StockFragment : Fragment() {
             findNavController().navigate(R.id.acaoStockParaForm, args)
         },
         onMovimento = { produto ->
-            MovimentoDialogo(requireContext(), produto) {
-                // O LiveData atualiza sozinho, não precisa de ação extra
-            }.mostrar()
+            // O LiveData atualiza a lista sozinho depois da gravação
+            MovimentoDialogo(
+                requireContext(), produto, viewLifecycleOwner.lifecycleScope
+            ).mostrar()
         }
     )
     private val adapterAlertas = AlertaAdapter(
@@ -52,7 +54,9 @@ class StockFragment : Fragment() {
             findNavController().navigate(R.id.acaoStockParaForm, args)
         },
         onMovimento = { produto ->
-            MovimentoDialogo(requireContext(), produto) {}.mostrar()
+            MovimentoDialogo(
+                requireContext(), produto, viewLifecycleOwner.lifecycleScope
+            ).mostrar()
         }
     )
 

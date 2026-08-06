@@ -113,6 +113,7 @@
     <string name="form_quantidade">QUANTIDADE EM STOCK</string>
     <string name="erro_nome_produto">O nome é obrigatório</string>
     <string name="erro_sku">O SKU é obrigatório</string>
+    <string name="erro_sku_duplicado">Já existe um produto com este SKU</string>
     <string name="produto_guardado">Produto guardado</string>
     <string name="eliminar_titulo">Eliminar produto</string>
     <string name="eliminar_mensagem">Esta ação não pode ser desfeita.</string>
@@ -140,7 +141,6 @@
     <string name="editar_guardar">Guardar alterações</string>
     <string name="erro_nome_vazio">O nome é obrigatório</string>
     <string name="erro_password_atual">Password atual incorreta</string>
-    <string name="erro_password_curta_5">Mínimo de 5 caracteres</string>
     <string name="perfil_atualizado">Perfil atualizado</string>
     <string name="perfil_password_atualizados">Perfil e password atualizados</string>
 

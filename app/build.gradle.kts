@@ -23,6 +23,11 @@ android {
 
     buildTypes {
         release {
+            // ponytail: sem R8, portanto o APK de release sai legível. No AGP
+            // 9.2 pôr enable = true exige a flag experimental
+            // android.r8.gradual.support, e um release ofuscado que não chega
+            // a ser testado num dispositivo é pior do que um release legível.
+            // Ligar as duas coisas quando a flag sair de experimental.
             optimization {
                 enable = false
             }

@@ -38,7 +38,7 @@
         <ImageView
             android:layout_width="96dp"
             android:layout_height="96dp"
-            android:src="@drawable/ic_inventory"
+            android:src="@drawable/inventory"
             android:contentDescription="@string/splash_logotipo"
             app:tint="@color/splash_texto" />
 
@@ -62,20 +62,8 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="@color/splash_texto"
             android:textSize="15sp"
-            android:textStyle="bold" />
+            />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:gravity="center"
-            android:alpha="0.8"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:text="@string/splash_descricao"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="@color/splash_texto"
-            android:textSize="12sp" />
 
 
     </LinearLayout>

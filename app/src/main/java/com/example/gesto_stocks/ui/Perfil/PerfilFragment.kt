@@ -9,6 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.gesto_stocks.MainActivity
 import com.example.gesto_stocks.data.local.StockifyDatabase
 import com.example.gesto_stocks.databinding.FragmentPerfilBinding
+import com.example.gesto_stocks.ui.stocks.Rascunho
 import com.example.gesto_stocks.util.Sessao
 import com.example.gesto_stocks.util.iniciais
 import kotlinx.coroutines.launch

@@ -8,7 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.gesto_stocks.data.local.StockifyDatabase
 import com.example.gesto_stocks.databinding.ActivityLoginBinding
 import com.example.gesto_stocks.util.Sessao
-import com.example.gesto_stocks.util.hashPassword
+import com.example.gesto_stocks.util.passwordCorreta
 import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
@@ -37,7 +37,7 @@ class LoginActivity : AppCompatActivity() {
                 val utilizador = dao.buscarPorEmail(email)
 
                 if (utilizador == null ||
-                    utilizador.passwordHash != hashPassword(password)) {
+                    !passwordCorreta(password, utilizador.passwordHash)) {
                     erro(binding.editPassword, getString(R.string.erro_credenciais))
                     return@launch
                 }
