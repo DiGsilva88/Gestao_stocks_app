@@ -97,4 +97,7 @@ class StockViewModel(app: Application) : AndroidViewModel(app) {
         dao.eliminar(produto)
     }
 
+    /** Apenas o que está visível no ecrã neste momento. */
+    fun listaVisivel(): List<Produto> = produtos.value.orEmpty()
 }
+
