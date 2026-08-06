@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.gesto_stocks.MainActivity
 import com.example.gesto_stocks.R
 import com.example.gesto_stocks.data.local.StockifyDatabase
 import com.example.gesto_stocks.databinding.FragmentStockBinding
@@ -70,6 +71,8 @@ class StockFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.btnMenu.setOnClickListener { (requireActivity() as MainActivity).abrirMenu() }
 
         // O layoutManager tem de ser definido antes do adapter,
         // caso contrário a lista aparece vazia

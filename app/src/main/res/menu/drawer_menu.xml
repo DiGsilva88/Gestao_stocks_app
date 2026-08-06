@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Só acções secundárias: os três ecrãs principais já estão na barra de baixo
+    e repeti-los aqui daria dois caminhos para o mesmo sítio.
+-->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menuEditarPerfil"
+        android:icon="@drawable/ic_edit"
+        android:title="@string/menu_editar_perfil" />
+
+    <item
+        android:id="@+id/menuMovimentos"
+        android:icon="@drawable/ic_movimento"
+        android:title="@string/menu_movimentos" />
+
+    <item
+        android:id="@+id/menuSobre"
+        android:icon="@drawable/ic_sobre"
+        android:title="@string/menu_sobre" />
+
+    <item
+        android:id="@+id/menuTerminarSessao"
+        android:icon="@drawable/ic_sair"
+        android:title="@string/perfil_terminar_sessao" />
+
+</menu>

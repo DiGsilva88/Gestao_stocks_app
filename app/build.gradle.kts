@@ -40,6 +40,8 @@ android {
 
     buildFeatures {
         viewBinding = true
+        // BuildConfig.VERSION_NAME, mostrado no diálogo "Sobre" do menu
+        buildConfig = true
     }
 }
 

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Avatar para fundos azuis (cabeçalho do menu). O bg_avatar normal é azul
+    claro e sobre o azul do cabeçalho quase desaparecia; branco com as iniciais
+    a azul dá 4.6:1 de contraste.
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <solid android:color="@color/contrast" />
+</shape>

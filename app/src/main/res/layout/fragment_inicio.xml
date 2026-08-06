@@ -20,6 +20,16 @@
             android:gravity="center_vertical"
             android:layout_marginBottom="24dp">
 
+            <ImageButton
+                android:id="@+id/btnMenu"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/bg_icone"
+                android:contentDescription="@string/desc_abrir_menu"
+                android:padding="10dp"
+                android:src="@drawable/ic_menu" />
+
             <TextView
                 android:id="@+id/txtIniciais"
                 android:layout_width="44dp"
@@ -212,7 +222,7 @@
                     android:layout_marginEnd="10dp"
                     android:background="@drawable/bg_icone"
                     android:padding="8dp"
-                    android:src="@drawable/ic_money"
+                    android:src="@drawable/ic_euros"
                     android:contentDescription="@string/inicio_lucro_total"
                     app:tint="@color/text_primary" />
 
