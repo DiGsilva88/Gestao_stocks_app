@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.gesto_stocks.LoginActivity
 import com.example.gesto_stocks.data.local.StockifyDatabase
 import com.example.gesto_stocks.databinding.FragmentPerfilBinding
+import com.example.gesto_stocks.ui.stocks.Rascunho
 import com.example.gesto_stocks.util.Sessao
 import kotlinx.coroutines.launch
 import androidx.navigation.fragment.findNavController
@@ -81,6 +82,9 @@ class PerfilFragment : Fragment() {
             .setMessage(R.string.sair_mensagem)
             .setPositiveButton(R.string.sair_confirmar) { _, _ ->
                 Sessao(requireContext()).terminar()
+                // O rascunho vive no processo: sem isto, o formulário por
+                // gravar de um utilizador reaparecia ao próximo que entrasse
+                Rascunho.limpar()
                 startActivity(Intent(requireContext(), LoginActivity::class.java))
                 requireActivity().finish()
             }

@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.withTransaction
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.gesto_stocks.data.model.Produto
 import com.example.gesto_stocks.data.model.Utilizador
@@ -15,11 +16,11 @@ import com.example.gesto_stocks.data.model.Movimento
 
 /**
  * Base de dados local da aplicação.
- * Contém duas tabelas: produtos e utilizadores.
+ * Contém três tabelas: produtos, utilizadores e movimentos.
  */
 @Database(
     entities = [Produto::class, Utilizador::class, Movimento::class],
-    version = 2
+    version = 3
 )
 abstract class StockifyDatabase : RoomDatabase() {
 
@@ -28,6 +29,25 @@ abstract class StockifyDatabase : RoomDatabase() {
 
     abstract fun movimentoDao(): MovimentoDao
 
+    /**
+     * Ajusta o stock e regista o movimento como uma só operação.
+     * O ajuste é feito em SQL (`quantidade = quantidade + :delta`) em vez de
+     * ler-alterar-escrever a partir de uma cópia do produto: assim duas saídas
+     * ao mesmo tempo não perdem uma, e a verificação de stock suficiente fica
+     * ligada à escrita em vez de ser um `if` antes dela.
+     *
+     * @param delta positivo numa entrada, negativo numa saída.
+     * @return false se não houver stock que chegue — nada é gravado.
+     */
+    suspend fun registarMovimento(movimento: Movimento, delta: Int): Boolean =
+        withTransaction {
+            if (produtoDao().ajustarQuantidade(movimento.produtoId, delta) == 0) {
+                return@withTransaction false
+            }
+            movimentoDao().inserir(movimento)
+            true
+        }
+
     companion object {
         // Instância única: evita abrir várias ligações à mesma base de dados
         @Volatile
@@ -35,62 +55,57 @@ abstract class StockifyDatabase : RoomDatabase() {
 
         fun obter(context: Context): StockifyDatabase {
             return INSTANCIA ?: synchronized(this) {
-                val db = Room.databaseBuilder(
+                INSTANCIA ?: Room.databaseBuilder(
                     context.applicationContext,
                     StockifyDatabase::class.java,
                     "stockify.db"
                 )
-                    // BD local de demonstração: sem migração formal, recria o
-                    // schema (perde dados locais) quando a versão muda.
+                    // ponytail: sem migrações formais, o schema é recriado e os
+                    // dados locais perdem-se em cada mudança de versão. Escrever
+                    // Migration reais antes de haver stock a sério na app.
                     .fallbackToDestructiveMigration(true)
+                    // Os dois callbacks cobrem os dois momentos em que as tabelas
+                    // nascem vazias: ficheiro novo (onCreate) e schema recriado
+                    // pela migração destrutiva sobre um ficheiro que já existia
+                    // (onDestructiveMigration) — este último era a razão por que
+                    // o seed estava a ser feito à mão. Correm dentro da abertura
+                    // da base de dados, portanto os dados existem antes de
+                    // qualquer query, e fora da thread principal.
+                    .addCallback(object : Callback() {
+                        override fun onCreate(db: SupportSQLiteDatabase) =
+                            dadosIniciais(db)
+
+                        override fun onDestructiveMigration(db: SupportSQLiteDatabase) =
+                            dadosIniciais(db)
+                    })
                     .build()
-
-                // Preenche a base de dados se estiver vazia. Corre de forma síncrona
-                // com SQL direto (não os DAOs do Room) sobre a ligação já aberta:
-                // garante que os dados existem antes de qualquer query (ex.: o
-                // login) poder ser executada. Não usamos Callback.onCreate porque
-                // só dispara na criação do ficheiro da BD, nunca quando o schema
-                // é recriado por fallbackToDestructiveMigration num ficheiro já
-                // existente — o que deixava a BD sem admin depois de um upgrade.
-                garantirDadosIniciais(db.openHelper.writableDatabase)
-
-                INSTANCIA = db
-                db
+                    .also { INSTANCIA = it }
             }
         }
 
-        private fun garantirDadosIniciais(db: SupportSQLiteDatabase) {
-            if (contar(db, "produtos") == 0L) {
-                exemplos().forEach { produto ->
-                    db.insert("produtos", SQLiteDatabase.CONFLICT_ABORT, ContentValues().apply {
-                        put("nome", produto.nome)
-                        put("sku", produto.sku)
-                        put("categoria", produto.categoria)
-                        put("fornecedor", produto.fornecedor)
-                        put("preco", produto.preco)
-                        put("precoCusto", produto.precoCusto)
-                        put("quantidade", produto.quantidade)
-                        put("stockMinimo", produto.stockMinimo)
-                    })
-                }
+        /** Semeia produtos e contas de demonstração. As tabelas estão vazias. */
+        private fun dadosIniciais(db: SupportSQLiteDatabase) {
+            exemplos().forEach { produto ->
+                db.insert("produtos", SQLiteDatabase.CONFLICT_ABORT, ContentValues().apply {
+                    put("nome", produto.nome)
+                    put("sku", produto.sku)
+                    put("categoria", produto.categoria)
+                    put("fornecedor", produto.fornecedor)
+                    put("preco", produto.preco)
+                    put("precoCusto", produto.precoCusto)
+                    put("quantidade", produto.quantidade)
+                    put("stockMinimo", produto.stockMinimo)
+                })
             }
 
-            if (contar(db, "utilizadores") == 0L) {
-                utilizadoresIniciais().forEach { utilizador ->
-                    db.insert("utilizadores", SQLiteDatabase.CONFLICT_ABORT, ContentValues().apply {
-                        put("nome", utilizador.nome)
-                        put("email", utilizador.email)
-                        put("passwordHash", utilizador.passwordHash)
-                    })
-                }
+            utilizadoresIniciais().forEach { utilizador ->
+                db.insert("utilizadores", SQLiteDatabase.CONFLICT_ABORT, ContentValues().apply {
+                    put("nome", utilizador.nome)
+                    put("email", utilizador.email)
+                    put("passwordHash", utilizador.passwordHash)
+                })
             }
         }
-
-        private fun contar(db: SupportSQLiteDatabase, tabela: String): Long =
-            db.query("SELECT COUNT(*) FROM $tabela").use {
-                it.moveToFirst()
-                it.getLong(0)
-            }
 
         // Produtos de demonstração: incluem os três estados possíveis
         // (esgotado, abaixo do mínimo e normal)
@@ -112,7 +127,12 @@ abstract class StockifyDatabase : RoomDatabase() {
                 preco = 134.20, precoCusto = 85.00, quantidade = 8, stockMinimo = 15)
         )
 
-        // Contas de acesso definidas no enunciado do trabalho prático
+        // Contas de acesso definidas no enunciado do trabalho prático.
+        // ponytail: credenciais de demonstração em claro no código-fonte — é o
+        // teto conhecido desta app. Antes de qualquer distribuição real: gerar
+        // no primeiro arranque e forçar mudança de password no primeiro login.
+        // As passwords ficam guardadas com PBKDF2 e sal, por isso o ficheiro
+        // da base de dados não é, por si só, uma lista de passwords.
         private fun utilizadoresIniciais() = listOf(
             Utilizador(
                 nome = "Administrador",

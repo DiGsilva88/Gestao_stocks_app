@@ -20,6 +20,21 @@ interface ProdutoDao {
     @Query("SELECT * FROM produtos WHERE id = :id LIMIT 1")
     suspend fun buscarPorId(id: Int): Produto?
 
+    /** Serve para avisar no formulário antes de o índice único recusar. */
+    @Query("SELECT id FROM produtos WHERE sku = :sku LIMIT 1")
+    suspend fun idPorSku(sku: String): Int?
+
+    /**
+     * Soma [delta] ao stock (negativo numa saída) numa única instrução, com o
+     * limite de zero dentro do WHERE para que a verificação e a escrita não
+     * possam ficar desfasadas.
+     *
+     * @return número de linhas alteradas: 0 quando não há stock suficiente.
+     */
+    @Query("UPDATE produtos SET quantidade = quantidade + :delta " +
+            "WHERE id = :id AND quantidade + :delta >= 0")
+    suspend fun ajustarQuantidade(id: Int, delta: Int): Int
+
     @Insert
     suspend fun inserir(produto: Produto)
 

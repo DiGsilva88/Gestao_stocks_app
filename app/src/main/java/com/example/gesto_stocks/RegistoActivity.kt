@@ -2,6 +2,7 @@ package com.example.gesto_stocks
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Patterns
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -68,7 +69,9 @@ class RegistoActivity : AppCompatActivity() {
         if (email.isEmpty()) {
             return erro(binding.editEmail, getString(R.string.erro_email_obrigatorio))
         }
-        if (!email.contains("@") || !email.contains(".")) {
+        // Patterns.EMAIL_ADDRESS vem do Android: apanha os casos que o
+        // contains("@") deixava passar ("a@", "@b.pt", "a b@c.pt")
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             return erro(binding.editEmail, getString(R.string.erro_email_invalido))
         }
         if (password.length < 6) {

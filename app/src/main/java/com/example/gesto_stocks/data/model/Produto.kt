@@ -1,9 +1,15 @@
 package com.example.gesto_stocks.data.model
 
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "produtos")
+// O SKU identifica o produto no armazém: dois registos com o mesmo SKU são
+// sempre um engano, por isso é a base de dados a recusá-los
+@Entity(
+    tableName = "produtos",
+    indices = [Index(value = ["sku"], unique = true)]
+)
 data class Produto(
     @PrimaryKey(autoGenerate = true)
 
