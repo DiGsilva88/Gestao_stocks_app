@@ -285,15 +285,4 @@ avisado no README.
 
 ---
 
-## 7. Verificação manual pendente
 
-Em emulador, desinstalando a aplicação primeiro para forçar uma base de dados
-nova:
-
-- login com `admin` / `password123`, que confirma que o preenchimento inicial
-  reescreveu os hashes em PBKDF2;
-- password errada a apresentar erro no campo, sem entrar;
-- registo de conta nova, encerramento de sessão e entrada com essa conta;
-- alteração de password no perfil e entrada com a nova;
-- saída superior ao stock a ser recusada sem fechar o diálogo;
-- criação de produto com SKU já existente a apresentar erro.
