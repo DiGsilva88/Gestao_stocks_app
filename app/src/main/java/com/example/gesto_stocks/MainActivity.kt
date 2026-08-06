@@ -15,6 +15,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.gesto_stocks.data.local.StockifyDatabase
 import com.example.gesto_stocks.databinding.ActivityMainBinding
+import com.example.gesto_stocks.ui.stocks.Rascunho
 import com.example.gesto_stocks.util.Sessao
 import com.example.gesto_stocks.util.iniciais
 import kotlinx.coroutines.launch
@@ -122,6 +123,10 @@ class MainActivity : AppCompatActivity() {
             .setMessage(R.string.sair_mensagem)
             .setPositiveButton(R.string.sair_confirmar) { _, _ ->
                 Sessao(this).terminar()
+                // O rascunho do formulário de produto vive no processo: sem
+                // isto, o que um utilizador deixou por gravar reaparecia ao
+                // próximo que entrasse
+                Rascunho.limpar()
                 startActivity(Intent(this, LoginActivity::class.java))
                 finish()
             }

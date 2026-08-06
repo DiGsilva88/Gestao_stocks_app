@@ -29,7 +29,7 @@ import kotlinx.coroutines.withContext
  * gravado, para os repor caso o utilizador retroceda e volte ao formulário.
  * O rascunho é limpo quando o produto é guardado com sucesso.
  */
-private object Rascunho {
+internal object Rascunho {
     var nome = ""
     var sku = ""
     var categoria = ""
